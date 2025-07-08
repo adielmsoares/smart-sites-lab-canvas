@@ -76,7 +76,7 @@ const Header: React.FC = () => {
             transition={{ type: "spring", stiffness: 400 }}
           >
             <motion.img
-              src="https://smartsiteslab.netlify.app/src/components/assets/img/smartsites-logo.png"
+              src="./src/components/assets/img/smartsites-logo.png"
               alt="Smart Sites Lab Logo"
               className="w-8 sm:w-10 h-8 sm:h-10"
               whileHover={{ rotate: 5 }}
