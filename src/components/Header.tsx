@@ -4,7 +4,7 @@ import LanguageSwitcher from './LanguageSwitcher';
 import ThemeToggle from './ThemeToggle';
 import { Menu, X } from 'lucide-react';
 import { motion, AnimatePresence } from 'framer-motion';
-import smartsitesLogo from './src/components/assets/img/smartsites-logo.png'; // Use the imported logo image
+import smartsitesLogo from '../assets/img/smartsites-logo.png'; // Importando a imagem do logo
 
 const Header: React.FC = () => {
   const { t } = useLanguage();
