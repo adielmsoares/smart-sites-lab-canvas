@@ -1,3 +1,4 @@
+
 import React from 'react';
 import { useLanguage } from '../contexts/LanguageContext';
 import { ExternalLink, Code, Palette } from 'lucide-react';
@@ -90,7 +91,7 @@ const Portfolio: React.FC = () => {
       opacity: 1,
       scale: 1,
       transition: {
-        type: "spring",
+        type: "spring" as const,
         damping: 15,
         stiffness: 200
       }
