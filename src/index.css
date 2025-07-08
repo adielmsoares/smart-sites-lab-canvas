@@ -3,7 +3,7 @@
 @tailwind components;
 @tailwind utilities;
 
-/* Smart Sites Lab Design System */
+/* Smart Sites Lab Design System with Dark Mode Support */
 @layer base {
   :root {
     --background: 0 0% 100%;
@@ -46,14 +46,14 @@
     --sidebar-ring: 217.2 91.2% 59.8%;
 
     /* Smart Sites Lab Design Tokens */
-    --color-primary-dark: #2E5C46;
-    --color-accent-green: #5EF4A1;
-    --color-accent-cyan: #30D5C7;
-    --color-white: #FFFFFF;
-    --color-black: #000000;
-    --color-gray-dark: #333333;
-    --color-gray-medium: #888888;
-    --color-gray-light: #F5F5F5;
+    --color-primary-dark: 46 42% 26%;
+    --color-accent-green: 157 86% 65%;
+    --color-accent-cyan: 175 76% 53%;
+    --color-white: 0 0% 100%;
+    --color-black: 0 0% 0%;
+    --color-gray-dark: 0 0% 20%;
+    --color-gray-medium: 0 0% 53%;
+    --color-gray-light: 0 0% 96%;
   }
 
   .dark {
@@ -84,26 +84,60 @@
     --sidebar-accent-foreground: 240 4.8% 95.9%;
     --sidebar-border: 240 3.7% 15.9%;
     --sidebar-ring: 217.2 91.2% 59.8%;
+
+    /* Dark mode overrides */
+    --color-primary-dark: 46 42% 26%;
+    --color-accent-green: 157 86% 65%;
+    --color-accent-cyan: 175 76% 53%;
+    --color-white: 0 0% 100%;
+    --color-black: 0 0% 0%;
+    --color-gray-dark: 0 0% 90%;
+    --color-gray-medium: 0 0% 60%;
+    --color-gray-light: 0 0% 15%;
   }
 }
 
 @layer base {
   * {
-    @apply border-border;
+    @apply border-border transition-colors duration-300;
   }
 
   body {
-    @apply bg-background text-foreground font-inter;
+    @apply bg-background text-foreground font-inter transition-colors duration-300;
   }
 
   h1, h2, h3, h4, h5, h6 {
     @apply font-poppins;
+  }
+
+  /* Smooth scrolling */
+  html {
+    scroll-behavior: smooth;
+  }
+
+  /* Custom scrollbar */
+  ::-webkit-scrollbar {
+    width: 8px;
+  }
+
+  ::-webkit-scrollbar-track {
+    @apply bg-gray-100 dark:bg-gray-700;
+  }
+
+  ::-webkit-scrollbar-thumb {
+    @apply bg-gray-300 dark:bg-gray-500 rounded-full;
+  }
+
+  ::-webkit-scrollbar-thumb:hover {
+    @apply bg-smart-green;
   }
 }
 
 @layer components {
   .gradient-text {
     @apply bg-gradient-to-r from-smart-green to-smart-cyan bg-clip-text text-transparent;
+    background-size: 200% 200%;
+    animation: gradient-shift 3s ease-in-out infinite;
   }
 
   .gradient-bg {
@@ -111,17 +145,17 @@
   }
 
   .gradient-bg-animated {
-    background: linear-gradient(-45deg, #5EF4A1, #30D5C7, #5EF4A1, #30D5C7);
+    background: linear-gradient(-45deg, hsl(var(--color-accent-green)), hsl(var(--color-accent-cyan)), hsl(var(--color-accent-green)), hsl(var(--color-accent-cyan)));
     background-size: 400% 400%;
     @apply animate-gradient-shift;
   }
 
   .btn-primary {
-    @apply bg-gradient-to-r from-smart-green to-smart-cyan text-black font-semibold py-3 px-6 rounded-lg transition-all duration-300 hover:shadow-lg hover:scale-105;
+    @apply bg-gradient-to-r from-smart-green to-smart-cyan text-black font-semibold py-3 px-6 rounded-lg transition-all duration-300 hover:shadow-lg hover:scale-105 hover:shadow-smart-green/25;
   }
 
   .btn-secondary {
-    @apply border-2 border-smart-green text-smart-green hover:bg-smart-green hover:text-black font-semibold py-3 px-6 rounded-lg transition-all duration-300;
+    @apply border-2 border-smart-green text-smart-green hover:bg-smart-green hover:text-black font-semibold py-3 px-6 rounded-lg transition-all duration-300 dark:text-smart-green dark:border-smart-green dark:hover:bg-smart-green dark:hover:text-black;
   }
 
   .section-padding {
@@ -131,4 +165,51 @@
   .container-width {
     @apply max-w-7xl mx-auto;
   }
+
+  /* Reduce motion for users who prefer it */
+  @media (prefers-reduced-motion: reduce) {
+    *,
+    *::before,
+    *::after {
+      animation-duration: 0.01ms !important;
+      animation-iteration-count: 1 !important;
+      transition-duration: 0.01ms !important;
+    }
+  }
+}
+
+/* Enhanced animations */
+@keyframes gradient-shift {
+  0%, 100% {
+    background-position: 0% 50%;
+  }
+  50% {
+    background-position: 100% 50%;
+  }
+}
+
+@keyframes float {
+  0%, 100% {
+    transform: translateY(0px);
+  }
+  50% {
+    transform: translateY(-10px);
+  }
+}
+
+@keyframes pulse-glow {
+  0%, 100% {
+    box-shadow: 0 0 5px rgba(94, 244, 161, 0.3);
+  }
+  50% {
+    box-shadow: 0 0 20px rgba(94, 244, 161, 0.6);
+  }
+}
+
+.animate-float {
+  animation: float 3s ease-in-out infinite;
+}
+
+.animate-pulse-glow {
+  animation: pulse-glow 2s ease-in-out infinite;
 }
