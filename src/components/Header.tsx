@@ -4,6 +4,7 @@ import LanguageSwitcher from './LanguageSwitcher';
 import ThemeToggle from './ThemeToggle';
 import { Menu, X } from 'lucide-react';
 import { motion, AnimatePresence } from 'framer-motion';
+import smartsitesLogo from './src/components/assets/img/smartsites-logo.png'; // Use the imported logo image
 
 const Header: React.FC = () => {
   const { t } = useLanguage();
@@ -76,7 +77,7 @@ const Header: React.FC = () => {
             transition={{ type: "spring", stiffness: 400 }}
           >
             <motion.img
-              src="./src/components/assets/img/smartsites-logo.png"
+              src={smartsitesLogo} // Use a variável aqui, não a string
               alt="Smart Sites Lab Logo"
               className="w-8 sm:w-10 h-8 sm:h-10"
               whileHover={{ rotate: 5 }}
