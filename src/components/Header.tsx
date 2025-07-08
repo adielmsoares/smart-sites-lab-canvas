@@ -1,4 +1,3 @@
-
 import React, { useState, useEffect } from 'react';
 import { useLanguage } from '../contexts/LanguageContext';
 import LanguageSwitcher from './LanguageSwitcher';
@@ -10,14 +9,34 @@ const Header: React.FC = () => {
   const { t } = useLanguage();
   const [isScrolled, setIsScrolled] = useState(false);
   const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
+  // Exemplo: const { theme } = useTheme(); // Obtenha o tema atual
+  // Para este exemplo, vamos simular o tema baseado na classe 'dark' no body ou html
+  const [isDarkMode, setIsDarkMode] = useState(false);
 
   useEffect(() => {
     const handleScroll = () => {
       setIsScrolled(window.scrollY > 10);
     };
 
+    const handleThemeChange = () => {
+      // Verifica se a classe 'dark' está presente no elemento <html>
+      setIsDarkMode(document.documentElement.classList.contains('dark'));
+    };
+
+    // Adiciona event listeners
     window.addEventListener('scroll', handleScroll);
-    return () => window.removeEventListener('scroll', handleScroll);
+    // Adiciona listener para mudanças no DOM que possam indicar mudança de tema
+    // Isso é uma simplificação, o ideal seria ter um contexto de tema
+    const observer = new MutationObserver(handleThemeChange);
+    observer.observe(document.documentElement, { attributes: true, attributeFilter: ['class'] });
+
+    // Roda a verificação inicial do tema
+    handleThemeChange();
+
+    return () => {
+      window.removeEventListener('scroll', handleScroll);
+      observer.disconnect();
+    };
   }, []);
 
   const navItems = [
@@ -30,42 +49,42 @@ const Header: React.FC = () => {
 
   const headerVariants = {
     transparent: {
-      backgroundColor: 'rgba(255, 255, 255, 0)',
+      backgroundColor: isDarkMode ? 'rgba(17, 24, 39, 0)' : 'rgba(255, 255, 255, 0)', // Ajuste para dark mode
       backdropFilter: 'blur(0px)',
       boxShadow: '0 0 0 0 rgba(0, 0, 0, 0)',
     },
     solid: {
-      backgroundColor: 'rgba(255, 255, 255, 0.95)',
+      backgroundColor: isDarkMode ? 'rgba(17, 24, 39, 0.95)' : 'rgba(255, 255, 255, 0.95)', // Ajuste para dark mode
       backdropFilter: 'blur(12px)',
-      boxShadow: '0 10px 25px -5px rgba(0, 0, 0, 0.1)',
+      boxShadow: isDarkMode ? '0 10px 25px -5px rgba(0, 0, 0, 0.5)' : '0 10px 25px -5px rgba(0, 0, 0, 0.1)', // Sombra mais escura para dark mode
     }
   };
 
   return (
     <motion.header
-      className="fixed top-0 left-0 right-0 z-50 transition-all duration-300 dark:bg-gray-900/95"
+      className="top-0 right-0 left-0 z-50 fixed transition-all duration-300" // Remova dark:bg-gray-900/95 daqui
       variants={headerVariants}
       animate={isScrolled ? 'solid' : 'transparent'}
       transition={{ duration: 0.3 }}
     >
       <div className="container-width">
-        <div className="flex items-center justify-between h-16 sm:h-20">
+        <div className="flex justify-between items-center h-16 sm:h-20">
           {/* Logo */}
-          <motion.div 
+          <motion.div
             className="flex items-center space-x-3"
             whileHover={{ scale: 1.02 }}
             transition={{ type: "spring", stiffness: 400 }}
           >
             <motion.img
-              src="/lovable-uploads/e815fa61-4ddc-4eec-be47-6e42e789155b.png"
+              src="./src/components/assets/img/smartsites-logo.png"
               alt="Smart Sites Lab Logo"
-              className="w-8 h-8 sm:w-10 sm:h-10"
+              className="w-8 sm:w-10 h-8 sm:h-10"
               whileHover={{ rotate: 5 }}
               transition={{ type: "spring", stiffness: 300 }}
             />
             <div className="flex items-center space-x-2">
-              <span className="text-lg sm:text-xl font-bold text-black dark:text-white">Smart Sites</span>
-              <span className="text-lg sm:text-xl font-light text-gray-600 dark:text-gray-400">Lab</span>
+              <span className="font-bold text-black dark:text-white text-lg sm:text-xl">Smart Sites</span>
+              <span className="font-light text-gray-600 dark:text-gray-400 text-lg sm:text-xl">Lab</span>
             </div>
           </motion.div>
 
@@ -75,7 +94,7 @@ const Header: React.FC = () => {
               <motion.a
                 key={item.href}
                 href={item.href}
-                className="text-gray-700 dark:text-gray-300 hover:text-smart-green dark:hover:text-smart-green transition-colors duration-200 font-medium relative"
+                className="relative font-medium text-gray-700 dark:text-gray-300 hover:text-smart-green dark:hover:text-smart-green transition-colors duration-200"
                 whileHover={{ y: -2 }}
                 initial={{ opacity: 0, y: 20 }}
                 animate={{ opacity: 1, y: 0 }}
@@ -83,7 +102,7 @@ const Header: React.FC = () => {
               >
                 {item.label}
                 <motion.div
-                  className="absolute -bottom-1 left-0 right-0 h-0.5 bg-smart-green"
+                  className="right-0 -bottom-1 left-0 absolute bg-smart-green h-0.5"
                   initial={{ scaleX: 0 }}
                   whileHover={{ scaleX: 1 }}
                   transition={{ duration: 0.2 }}
@@ -96,7 +115,7 @@ const Header: React.FC = () => {
           <div className="hidden lg:flex items-center space-x-4">
             <LanguageSwitcher />
             <ThemeToggle />
-            <motion.button 
+            <motion.button
               className="btn-primary"
               whileHover={{ scale: 1.05, y: -2 }}
               whileTap={{ scale: 0.95 }}
@@ -147,7 +166,7 @@ const Header: React.FC = () => {
         <AnimatePresence>
           {isMobileMenuOpen && (
             <motion.div
-              className="lg:hidden bg-white dark:bg-gray-900 border-t border-gray-200 dark:border-gray-700"
+              className="lg:hidden bg-white dark:bg-gray-900 border-gray-200 dark:border-gray-700 border-t"
               initial={{ height: 0, opacity: 0 }}
               animate={{ height: 'auto', opacity: 1 }}
               exit={{ height: 0, opacity: 0 }}
@@ -158,7 +177,7 @@ const Header: React.FC = () => {
                   <motion.a
                     key={item.href}
                     href={item.href}
-                    className="text-gray-700 dark:text-gray-300 hover:text-smart-green dark:hover:text-smart-green transition-colors duration-200 font-medium px-4"
+                    className="px-4 font-medium text-gray-700 dark:text-gray-300 hover:text-smart-green dark:hover:text-smart-green transition-colors duration-200"
                     onClick={() => setIsMobileMenuOpen(false)}
                     initial={{ x: -20, opacity: 0 }}
                     animate={{ x: 0, opacity: 1 }}
@@ -174,8 +193,8 @@ const Header: React.FC = () => {
                   animate={{ x: 0, opacity: 1 }}
                   transition={{ delay: navItems.length * 0.1 }}
                 >
-                  <motion.button 
-                    className="btn-primary w-full"
+                  <motion.button
+                    className="w-full btn-primary"
                     whileHover={{ scale: 1.02 }}
                     whileTap={{ scale: 0.98 }}
                   >

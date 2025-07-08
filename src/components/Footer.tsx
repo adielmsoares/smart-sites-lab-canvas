@@ -2,6 +2,7 @@
 import React from 'react';
 import { useLanguage } from '../contexts/LanguageContext';
 import { Mail, Phone, MapPin, Facebook, Twitter, Linkedin, Instagram } from 'lucide-react';
+import { Heart } from 'lucide-react';
 import { motion, useInView } from 'framer-motion';
 import { useRef } from 'react';
 
@@ -59,34 +60,34 @@ const Footer: React.FC = () => {
     <footer className="bg-black dark:bg-gray-950 text-white transition-colors duration-300" ref={ref}>
       <div className="container-width">
         {/* Main Footer Content */}
-        <motion.div 
+        <motion.div
           className="py-16"
           variants={containerVariants}
           initial="hidden"
           animate={isInView ? "visible" : "hidden"}
         >
-          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-8">
+          <div className="gap-8 grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4">
             {/* Company Info */}
             <motion.div className="lg:col-span-2" variants={itemVariants}>
-              <motion.div 
+              <motion.div
                 className="flex items-center space-x-3 mb-6"
                 whileHover={{ scale: 1.02 }}
                 transition={{ type: "spring", stiffness: 400 }}
               >
                 <motion.img
-                  src="/lovable-uploads/e815fa61-4ddc-4eec-be47-6e42e789155b.png"
+                  src="./src/components/assets/img/smartsites-logo.png"
                   alt="Smart Sites Lab Logo"
                   className="w-10 h-10"
                   whileHover={{ rotate: 10 }}
                   transition={{ type: "spring", stiffness: 300 }}
                 />
                 <div className="flex items-center space-x-2">
-                  <span className="text-xl font-bold text-white">Smart Sites</span>
-                  <span className="text-xl font-light text-gray-400">Lab</span>
+                  <span className="font-bold text-white text-xl">Smart Sites</span>
+                  <span className="font-light text-gray-400 text-xl">Lab</span>
                 </div>
               </motion.div>
-              <motion.p 
-                className="text-gray-400 mb-6 max-w-md"
+              <motion.p
+                className="mb-6 max-w-md text-gray-400"
                 whileHover={{ scale: 1.02 }}
               >
                 {t(
@@ -94,7 +95,7 @@ const Footer: React.FC = () => {
                   'We create modern and efficient web solutions that transform ideas into concrete results for your business.'
                 )}
               </motion.p>
-              
+
               {/* Contact Info */}
               <div className="space-y-3">
                 {[
@@ -105,7 +106,7 @@ const Footer: React.FC = () => {
                   <motion.div
                     key={index}
                     className="flex items-center space-x-3 text-gray-400"
-                    whileHover={{ 
+                    whileHover={{
                       x: 5,
                       color: "#5EF4A1",
                       transition: { duration: 0.2 }
@@ -125,7 +126,7 @@ const Footer: React.FC = () => {
 
             {/* Quick Links */}
             <motion.div variants={itemVariants}>
-              <h3 className="text-lg font-semibold text-white mb-6">
+              <h3 className="mb-6 font-semibold text-white text-lg">
                 {t('Links Rápidos', 'Quick Links')}
               </h3>
               <ul className="space-y-3">
@@ -149,7 +150,7 @@ const Footer: React.FC = () => {
 
             {/* Services */}
             <motion.div variants={itemVariants}>
-              <h3 className="text-lg font-semibold text-white mb-6">
+              <h3 className="mb-6 font-semibold text-white text-lg">
                 {t('Serviços', 'Services')}
               </h3>
               <ul className="space-y-3">
@@ -174,20 +175,20 @@ const Footer: React.FC = () => {
         </motion.div>
 
         {/* Bottom Footer */}
-        <motion.div 
-          className="border-t border-gray-800 py-8"
+        <motion.div
+          className="py-8 border-gray-800 border-t"
           initial={{ opacity: 0, y: 20 }}
           animate={isInView ? { opacity: 1, y: 0 } : { opacity: 0, y: 20 }}
           transition={{ duration: 0.6, delay: 0.8 }}
         >
-          <div className="flex flex-col md:flex-row justify-between items-center space-y-4 md:space-y-0">
+          <div className="flex md:flex-row flex-col justify-between items-center space-y-4 md:space-y-0">
             {/* Copyright */}
-            <motion.div 
-              className="text-gray-400 text-sm text-center md:text-left"
+            <motion.div
+              className="text-gray-400 text-sm md:text-left text-center"
               whileHover={{ scale: 1.02 }}
             >
               <p>
-                © {new Date().getFullYear()} Smart Sites Lab. {t('Todos os direitos reservados.', 'All rights reserved.')}
+                © {new Date().getFullYear()} - Smart Sites Lab. {t('Todos os direitos reservados.', 'All rights reserved.')}
               </p>
             </motion.div>
 
@@ -197,9 +198,9 @@ const Footer: React.FC = () => {
                 <motion.a
                   key={index}
                   href={social.href}
-                  className="w-10 h-10 bg-gray-800 rounded-full flex items-center justify-center text-gray-400 hover:bg-smart-green hover:text-black transition-all duration-200"
+                  className="flex justify-center items-center bg-gray-800 hover:bg-smart-green rounded-full w-10 h-10 text-gray-400 hover:text-black transition-all duration-200"
                   aria-label={social.label}
-                  whileHover={{ 
+                  whileHover={{
                     scale: 1.2,
                     rotate: 10,
                     y: -3
@@ -213,24 +214,31 @@ const Footer: React.FC = () => {
             </div>
 
             {/* Legal Links */}
-            <div className="flex items-center space-x-6 text-sm text-gray-400">
+            <div className="flex items-center space-x-6 text-gray-400 text-sm">
               {[
-                { label: t('Política de Privacidade', 'Privacy Policy'), href: '#' },
-                { label: t('Termos de Uso', 'Terms of Service'), href: '#' }
-              ].map((legal, index) => (
-                <motion.a
-                  key={index}
-                  href={legal.href}
-                  className="hover:text-smart-green transition-colors"
-                  whileHover={{ 
-                    scale: 1.05,
-                    y: -2
-                  }}
-                  transition={{ type: "spring", stiffness: 400 }}
-                >
-                  {legal.label}
-                </motion.a>
-              ))}
+                { label: t('Desenvolvido com', 'Developer with'), href: '#' },
+                { render: () => <Heart className="w-6 h-6 text-red-500 animate-pulse" /> },
+                { label: t('Smart Sites Lab', 'Smart Sites Lab'), href: '#' }
+              ].map((legal, index) =>
+                'href' in legal && 'label' in legal ? (
+                  <motion.a
+                    key={index}
+                    href={legal.href}
+                    className="hover:text-smart-green transition-colors"
+                    whileHover={{
+                      scale: 1.05,
+                      y: -2
+                    }}
+                    transition={{ type: "spring", stiffness: 400 }}
+                  >
+                    {legal.label}
+                  </motion.a>
+                ) : (
+                  <span key={index}>
+                    {'render' in legal && typeof legal.render === 'function' ? legal.render() : null}
+                  </span>
+                )
+              )}
             </div>
           </div>
         </motion.div>
