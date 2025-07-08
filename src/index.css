@@ -1,11 +1,9 @@
+
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
 
-/* Definition of the design system. All colors, gradients, fonts, etc should be defined here. 
-All colors MUST be HSL.
-*/
-
+/* Smart Sites Lab Design System */
 @layer base {
   :root {
     --background: 0 0% 100%;
@@ -39,47 +37,42 @@ All colors MUST be HSL.
     --radius: 0.5rem;
 
     --sidebar-background: 0 0% 98%;
-
     --sidebar-foreground: 240 5.3% 26.1%;
-
     --sidebar-primary: 240 5.9% 10%;
-
     --sidebar-primary-foreground: 0 0% 98%;
-
     --sidebar-accent: 240 4.8% 95.9%;
-
     --sidebar-accent-foreground: 240 5.9% 10%;
-
     --sidebar-border: 220 13% 91%;
-
     --sidebar-ring: 217.2 91.2% 59.8%;
+
+    /* Smart Sites Lab Design Tokens */
+    --color-primary-dark: #2E5C46;
+    --color-accent-green: #5EF4A1;
+    --color-accent-cyan: #30D5C7;
+    --color-white: #FFFFFF;
+    --color-black: #000000;
+    --color-gray-dark: #333333;
+    --color-gray-medium: #888888;
+    --color-gray-light: #F5F5F5;
   }
 
   .dark {
     --background: 222.2 84% 4.9%;
     --foreground: 210 40% 98%;
-
     --card: 222.2 84% 4.9%;
     --card-foreground: 210 40% 98%;
-
     --popover: 222.2 84% 4.9%;
     --popover-foreground: 210 40% 98%;
-
     --primary: 210 40% 98%;
     --primary-foreground: 222.2 47.4% 11.2%;
-
     --secondary: 217.2 32.6% 17.5%;
     --secondary-foreground: 210 40% 98%;
-
     --muted: 217.2 32.6% 17.5%;
     --muted-foreground: 215 20.2% 65.1%;
-
     --accent: 217.2 32.6% 17.5%;
     --accent-foreground: 210 40% 98%;
-
     --destructive: 0 62.8% 30.6%;
     --destructive-foreground: 210 40% 98%;
-
     --border: 217.2 32.6% 17.5%;
     --input: 217.2 32.6% 17.5%;
     --ring: 212.7 26.8% 83.9%;
@@ -100,6 +93,42 @@ All colors MUST be HSL.
   }
 
   body {
-    @apply bg-background text-foreground;
+    @apply bg-background text-foreground font-inter;
+  }
+
+  h1, h2, h3, h4, h5, h6 {
+    @apply font-poppins;
+  }
+}
+
+@layer components {
+  .gradient-text {
+    @apply bg-gradient-to-r from-smart-green to-smart-cyan bg-clip-text text-transparent;
+  }
+
+  .gradient-bg {
+    @apply bg-gradient-to-r from-smart-green to-smart-cyan;
+  }
+
+  .gradient-bg-animated {
+    background: linear-gradient(-45deg, #5EF4A1, #30D5C7, #5EF4A1, #30D5C7);
+    background-size: 400% 400%;
+    @apply animate-gradient-shift;
+  }
+
+  .btn-primary {
+    @apply bg-gradient-to-r from-smart-green to-smart-cyan text-black font-semibold py-3 px-6 rounded-lg transition-all duration-300 hover:shadow-lg hover:scale-105;
+  }
+
+  .btn-secondary {
+    @apply border-2 border-smart-green text-smart-green hover:bg-smart-green hover:text-black font-semibold py-3 px-6 rounded-lg transition-all duration-300;
+  }
+
+  .section-padding {
+    @apply py-xxxxl px-4 sm:px-6 lg:px-8;
+  }
+
+  .container-width {
+    @apply max-w-7xl mx-auto;
   }
 }

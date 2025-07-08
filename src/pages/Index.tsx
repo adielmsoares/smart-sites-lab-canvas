@@ -1,13 +1,27 @@
-// Update this page (the content is just a fallback if you fail to update the page)
 
-const Index = () => {
+import React from 'react';
+import { LanguageProvider } from '../contexts/LanguageContext';
+import Header from '../components/Header';
+import Hero from '../components/Hero';
+import Services from '../components/Services';
+import Portfolio from '../components/Portfolio';
+import Contact from '../components/Contact';
+import Footer from '../components/Footer';
+
+const Index: React.FC = () => {
   return (
-    <div className="min-h-screen flex items-center justify-center bg-background">
-      <div className="text-center">
-        <h1 className="text-4xl font-bold mb-4">Welcome to Your Blank App</h1>
-        <p className="text-xl text-muted-foreground">Start building your amazing project here!</p>
+    <LanguageProvider>
+      <div className="min-h-screen bg-white">
+        <Header />
+        <main>
+          <Hero />
+          <Services />
+          <Portfolio />
+          <Contact />
+        </main>
+        <Footer />
       </div>
-    </div>
+    </LanguageProvider>
   );
 };
 
