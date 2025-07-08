@@ -99,9 +99,9 @@ const Footer: React.FC = () => {
               {/* Contact Info */}
               <div className="space-y-3">
                 {[
-                  { icon: Mail, text: 'contato@smartsiteslab.com' },
-                  { icon: Phone, text: '+55 (11) 99999-9999' },
-                  { icon: MapPin, text: 'São Paulo, Brasil' }
+                  { icon: Mail, text: 'smartsiteslab@gmail.com' },
+                  { icon: Phone, text: '+55 (61) 99112-7447' },
+                  { icon: MapPin, text: 'Atendimento Remoto | Belo Horizonte' }
                 ].map((contact, index) => (
                   <motion.div
                     key={index}
@@ -216,7 +216,7 @@ const Footer: React.FC = () => {
             {/* Legal Links */}
             <div className="flex items-center space-x-6 text-gray-400 text-sm">
               {[
-                { label: t('Desenvolvido com', 'Developer with'), href: '#' },
+                { label: t('Desenvolvido com', 'Developed with'), href: '#' },
                 { render: () => <Heart className="w-6 h-6 text-red-500 animate-pulse" /> },
                 { label: t('Smart Sites Lab', 'Smart Sites Lab'), href: '#' }
               ].map((legal, index) =>
