@@ -1,10 +1,10 @@
 
 import React from 'react';
 import { useLanguage } from '../contexts/LanguageContext';
-import { Mail, Phone, MapPin, Facebook, Twitter, Linkedin, Instagram } from 'lucide-react';
-import { Heart } from 'lucide-react';
+import { Mail, Phone, MapPin, Heart, Facebook, Twitter, Linkedin, Instagram } from 'lucide-react';
 import { motion, useInView } from 'framer-motion';
 import { useRef } from 'react';
+import smartsitesLogo from './assets/img/smartsites-logo.png';
 
 const Footer: React.FC = () => {
   const { t } = useLanguage();
@@ -75,7 +75,7 @@ const Footer: React.FC = () => {
                 transition={{ type: "spring", stiffness: 400 }}
               >
                 <motion.img
-                  src="./src/components/assets/img/smartsites-logo.png"
+                  src={smartsitesLogo}
                   alt="Smart Sites Lab Logo"
                   className="w-10 h-10"
                   whileHover={{ rotate: 10 }}
