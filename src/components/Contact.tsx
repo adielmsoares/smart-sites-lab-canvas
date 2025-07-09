@@ -1,7 +1,7 @@
-
 import React, { useState } from 'react';
 import { useLanguage } from '../contexts/LanguageContext';
 import { Mail, Phone, MapPin, Send, CheckCircle, AlertCircle } from 'lucide-react';
+import emailjs from '@emailjs/browser';
 
 const Contact: React.FC = () => {
   const { t } = useLanguage();
@@ -16,11 +16,7 @@ const Contact: React.FC = () => {
 
   const handleInputChange = (e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>) => {
     const { name, value } = e.target;
-    setFormData(prev => ({
-      ...prev,
-      [name]: value
-    }));
-    // Clear error when user starts typing
+    setFormData(prev => ({ ...prev, [name]: value }));
     if (error) setError('');
   };
 
@@ -30,37 +26,28 @@ const Contact: React.FC = () => {
     setError('');
 
     try {
-      // Using EmailJS service to send emails directly from frontend
-      const templateParams = {
-        from_name: formData.name,
-        from_email: formData.email,
-        message: formData.message,
-        to_email: 'smartsiteslab@gmail.com'
-      };
-
-      // Create mailto link as fallback
-      const subject = encodeURIComponent(`Contato do site - ${formData.name}`);
-      const body = encodeURIComponent(
-        `Nome: ${formData.name}\nEmail: ${formData.email}\n\nMensagem:\n${formData.message}`
+      await emailjs.send(
+        'service_1c2p2fm', // 🔁 seu service ID
+        'template_mga94eh', // 🔁 seu template ID
+        {
+          from_name: formData.name,
+          reply_to: formData.email,
+          message: formData.message
+        },
+        'FmYCUQTnOJg_A92Vn' // 🔁 sua public key
       );
-      const mailtoLink = `mailto:smartsiteslab@gmail.com?subject=${subject}&body=${body}`;
 
-      console.log('Form submitted:', formData);
-      console.log('Opening email client...');
-      
-      // Open default email client
-      window.location.href = mailtoLink;
-      
       setIsSubmitted(true);
-      setTimeout(() => setIsSubmitted(false), 5000);
       setFormData({ name: '', email: '', message: '' });
-      
+      setTimeout(() => setIsSubmitted(false), 5000);
     } catch (err) {
-      console.error('Error sending email:', err);
-      setError(t(
-        'Erro ao enviar mensagem. Tente novamente ou entre em contato diretamente.',
-        'Error sending message. Please try again or contact us directly.'
-      ));
+      console.error('Erro ao enviar e-mail:', err);
+      setError(
+        t(
+          'Erro ao enviar mensagem. Tente novamente ou entre em contato diretamente.',
+          'Error sending message. Please try again or contact us directly.'
+        )
+      );
     } finally {
       setIsLoading(false);
     }
@@ -69,7 +56,6 @@ const Contact: React.FC = () => {
   return (
     <section id="contact" className="bg-smart-dark text-white section-padding">
       <div className="container-width">
-        {/* Section Header */}
         <div className="mb-16 text-center">
           <div className="inline-flex items-center space-x-2 bg-white/10 mb-6 px-4 py-2 border border-white/20 rounded-full">
             <Mail className="w-4 h-4 text-smart-green" />
@@ -92,7 +78,6 @@ const Contact: React.FC = () => {
         </div>
 
         <div className="gap-12 grid grid-cols-1 lg:grid-cols-2">
-          {/* Contact Info */}
           <div>
             <h3 className="mb-8 font-bold text-white text-2xl">
               {t('Entre em contato', 'Get in touch')}
@@ -131,13 +116,12 @@ const Contact: React.FC = () => {
                   <h4 className="mb-1 font-semibold text-white">
                     {t('Localização', 'Location')}
                   </h4>
-                  <p className="text-gray-300">Belo Horizonte - MG</p>
+                  <p className="text-gray-300">Brasília - DF | Belo Horizonte - MG</p>
                   <p className="text-gray-300">{t('Atendimento remoto', 'Remote service')}</p>
                 </div>
               </div>
             </div>
 
-            {/* Response Time */}
             <div className="bg-white/5 mt-10 p-6 border border-white/10 rounded-2xl">
               <h4 className="mb-2 font-semibold text-white">
                 {t('Tempo de resposta', 'Response time')}
@@ -151,14 +135,13 @@ const Contact: React.FC = () => {
             </div>
           </div>
 
-          {/* Contact Form */}
           <div className="bg-white/5 backdrop-blur-sm p-8 border border-white/10 rounded-2xl">
             <h3 className="mb-6 font-bold text-white text-2xl">
               {t('Envie uma mensagem', 'Send a message')}
             </h3>
 
             {error && (
-              <div className="flex items-center space-x-2 bg-red-500/10 border border-red-500/20 rounded-lg p-4 mb-6">
+              <div className="flex items-center space-x-2 bg-red-500/10 mb-6 p-4 border border-red-500/20 rounded-lg">
                 <AlertCircle className="w-5 h-5 text-red-400" />
                 <p className="text-red-400 text-sm">{error}</p>
               </div>
@@ -172,7 +155,7 @@ const Contact: React.FC = () => {
                     {t('Mensagem enviada!', 'Message sent!')}
                   </h4>
                   <p className="text-gray-300">
-                    {t('Seu cliente de email será aberto. Obrigado pelo contato!', 'Your email client will be opened. Thank you for contacting us!')}
+                    {t('Obrigado pelo contato. Em breve retornaremos.', 'Thank you for contacting us. We’ll get back to you soon.')}
                   </p>
                 </div>
               </div>
@@ -190,7 +173,7 @@ const Contact: React.FC = () => {
                     onChange={handleInputChange}
                     required
                     disabled={isLoading}
-                    className="bg-white/10 px-4 py-3 border border-white/20 focus:border-transparent rounded-lg focus:outline-none focus:ring-2 focus:ring-smart-green w-full text-white transition-all duration-200 placeholder-gray-400 disabled:opacity-50"
+                    className="bg-white/10 disabled:opacity-50 px-4 py-3 border border-white/20 focus:border-transparent rounded-lg focus:outline-none focus:ring-2 focus:ring-smart-green w-full text-white transition-all duration-200 placeholder-gray-400"
                     placeholder={t('Seu nome', 'Your name')}
                   />
                 </div>
@@ -207,7 +190,7 @@ const Contact: React.FC = () => {
                     onChange={handleInputChange}
                     required
                     disabled={isLoading}
-                    className="bg-white/10 px-4 py-3 border border-white/20 focus:border-transparent rounded-lg focus:outline-none focus:ring-2 focus:ring-smart-green w-full text-white transition-all duration-200 placeholder-gray-400 disabled:opacity-50"
+                    className="bg-white/10 disabled:opacity-50 px-4 py-3 border border-white/20 focus:border-transparent rounded-lg focus:outline-none focus:ring-2 focus:ring-smart-green w-full text-white transition-all duration-200 placeholder-gray-400"
                     placeholder={t('seu@email.com', 'your@email.com')}
                   />
                 </div>
@@ -224,7 +207,7 @@ const Contact: React.FC = () => {
                     required
                     rows={5}
                     disabled={isLoading}
-                    className="bg-white/10 px-4 py-3 border border-white/20 focus:border-transparent rounded-lg focus:outline-none focus:ring-2 focus:ring-smart-green w-full text-white transition-all duration-200 resize-none placeholder-gray-400 disabled:opacity-50"
+                    className="bg-white/10 disabled:opacity-50 px-4 py-3 border border-white/20 focus:border-transparent rounded-lg focus:outline-none focus:ring-2 focus:ring-smart-green w-full text-white transition-all duration-200 resize-none placeholder-gray-400"
                     placeholder={t('Conte-nos sobre seu projeto...', 'Tell us about your project...')}
                   />
                 </div>
@@ -232,11 +215,11 @@ const Contact: React.FC = () => {
                 <button
                   type="submit"
                   disabled={isLoading}
-                  className="group flex justify-center items-center space-x-2 w-full btn-primary disabled:opacity-50 disabled:cursor-not-allowed"
+                  className="group flex justify-center items-center space-x-2 disabled:opacity-50 w-full disabled:cursor-not-allowed btn-primary"
                 >
                   <span>
-                    {isLoading 
-                      ? t('Enviando...', 'Sending...') 
+                    {isLoading
+                      ? t('Enviando...', 'Sending...')
                       : t('Enviar mensagem', 'Send message')
                     }
                   </span>
