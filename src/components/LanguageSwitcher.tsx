@@ -8,14 +8,14 @@ const LanguageSwitcher: React.FC = () => {
 
   return (
     <div className="flex items-center space-x-2">
-      <Globe className="w-4 h-4 text-gray-600" />
-      <div className="flex bg-gray-100 rounded-lg p-1">
+      <Globe className="w-4 h-4 text-muted-foreground" />
+      <div className="flex bg-muted rounded-lg p-1">
         <button
           onClick={() => setLanguage('pt')}
           className={`px-3 py-1 text-sm font-medium rounded-md transition-all duration-200 ${
             language === 'pt'
-              ? 'bg-white text-smart-green shadow-sm'
-              : 'text-gray-600 hover:text-gray-900'
+              ? 'bg-background text-smart-green shadow-sm'
+              : 'text-muted-foreground hover:text-foreground'
           }`}
         >
           PT
@@ -24,8 +24,8 @@ const LanguageSwitcher: React.FC = () => {
           onClick={() => setLanguage('en')}
           className={`px-3 py-1 text-sm font-medium rounded-md transition-all duration-200 ${
             language === 'en'
-              ? 'bg-white text-smart-green shadow-sm'
-              : 'text-gray-600 hover:text-gray-900'
+              ? 'bg-background text-smart-green shadow-sm'
+              : 'text-muted-foreground hover:text-foreground'
           }`}
         >
           EN
