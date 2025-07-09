@@ -2,7 +2,7 @@ import React from 'react';
 import { motion } from 'framer-motion';
 import { useLanguage } from '../contexts/LanguageContext';
 import { Badge } from './ui/badge';
-import { Bookmark, Code, Palette, Zap } from 'lucide-react';
+import { Bookmark, Code, Palette, Zap, User } from 'lucide-react';
 
 const About: React.FC = () => {
   const { t } = useLanguage();
