@@ -1,9 +1,8 @@
-
 import React from 'react';
 import { motion } from 'framer-motion';
 import { useLanguage } from '../contexts/LanguageContext';
 import { Badge } from './ui/badge';
-import { User, Code, Palette, Zap } from 'lucide-react';
+import { Bookmark, Code, Palette, Zap } from 'lucide-react';
 
 const About: React.FC = () => {
   const { t } = useLanguage();
@@ -99,7 +98,7 @@ const About: React.FC = () => {
                   repeatDelay: 2
                 }}
               >
-                <User className="w-4 h-4 text-smart-green" />
+                <Bookmark className="w-4 h-4 text-smart-green" />
               </motion.div>
               <span className="text-sm font-medium text-gray-700 dark:text-gray-300">
                 {t('Sobre Nós', 'About Us')}
