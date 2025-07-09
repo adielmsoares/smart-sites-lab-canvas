@@ -1,7 +1,7 @@
 
 import React, { useState } from 'react';
 import { useLanguage } from '../contexts/LanguageContext';
-import { Mail, Phone, MapPin, Send, CheckCircle } from 'lucide-react';
+import { Mail, Phone, MapPin, Send, CheckCircle, AlertCircle } from 'lucide-react';
 
 const Contact: React.FC = () => {
   const { t } = useLanguage();
@@ -11,6 +11,8 @@ const Contact: React.FC = () => {
     message: '',
   });
   const [isSubmitted, setIsSubmitted] = useState(false);
+  const [isLoading, setIsLoading] = useState(false);
+  const [error, setError] = useState('');
 
   const handleInputChange = (e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>) => {
     const { name, value } = e.target;
@@ -18,15 +20,50 @@ const Contact: React.FC = () => {
       ...prev,
       [name]: value
     }));
+    // Clear error when user starts typing
+    if (error) setError('');
   };
 
-  const handleSubmit = (e: React.FormEvent) => {
+  const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
-    // Here you would normally send the form data to your backend
-    console.log('Form submitted:', formData);
-    setIsSubmitted(true);
-    setTimeout(() => setIsSubmitted(false), 3000);
-    setFormData({ name: '', email: '', message: '' });
+    setIsLoading(true);
+    setError('');
+
+    try {
+      // Using EmailJS service to send emails directly from frontend
+      const templateParams = {
+        from_name: formData.name,
+        from_email: formData.email,
+        message: formData.message,
+        to_email: 'smartsiteslab@gmail.com'
+      };
+
+      // Create mailto link as fallback
+      const subject = encodeURIComponent(`Contato do site - ${formData.name}`);
+      const body = encodeURIComponent(
+        `Nome: ${formData.name}\nEmail: ${formData.email}\n\nMensagem:\n${formData.message}`
+      );
+      const mailtoLink = `mailto:smartsiteslab@gmail.com?subject=${subject}&body=${body}`;
+
+      console.log('Form submitted:', formData);
+      console.log('Opening email client...');
+      
+      // Open default email client
+      window.location.href = mailtoLink;
+      
+      setIsSubmitted(true);
+      setTimeout(() => setIsSubmitted(false), 5000);
+      setFormData({ name: '', email: '', message: '' });
+      
+    } catch (err) {
+      console.error('Error sending email:', err);
+      setError(t(
+        'Erro ao enviar mensagem. Tente novamente ou entre em contato diretamente.',
+        'Error sending message. Please try again or contact us directly.'
+      ));
+    } finally {
+      setIsLoading(false);
+    }
   };
 
   return (
@@ -120,6 +157,13 @@ const Contact: React.FC = () => {
               {t('Envie uma mensagem', 'Send a message')}
             </h3>
 
+            {error && (
+              <div className="flex items-center space-x-2 bg-red-500/10 border border-red-500/20 rounded-lg p-4 mb-6">
+                <AlertCircle className="w-5 h-5 text-red-400" />
+                <p className="text-red-400 text-sm">{error}</p>
+              </div>
+            )}
+
             {isSubmitted ? (
               <div className="flex justify-center items-center py-12">
                 <div className="text-center">
@@ -128,7 +172,7 @@ const Contact: React.FC = () => {
                     {t('Mensagem enviada!', 'Message sent!')}
                   </h4>
                   <p className="text-gray-300">
-                    {t('Obrigado pelo contato. Retornaremos em breve.', 'Thank you for contacting us. We\'ll get back to you soon.')}
+                    {t('Seu cliente de email será aberto. Obrigado pelo contato!', 'Your email client will be opened. Thank you for contacting us!')}
                   </p>
                 </div>
               </div>
@@ -145,7 +189,8 @@ const Contact: React.FC = () => {
                     value={formData.name}
                     onChange={handleInputChange}
                     required
-                    className="bg-white/10 px-4 py-3 border border-white/20 focus:border-transparent rounded-lg focus:outline-none focus:ring-2 focus:ring-smart-green w-full text-white transition-all duration-200 placeholder-gray-400"
+                    disabled={isLoading}
+                    className="bg-white/10 px-4 py-3 border border-white/20 focus:border-transparent rounded-lg focus:outline-none focus:ring-2 focus:ring-smart-green w-full text-white transition-all duration-200 placeholder-gray-400 disabled:opacity-50"
                     placeholder={t('Seu nome', 'Your name')}
                   />
                 </div>
@@ -161,7 +206,8 @@ const Contact: React.FC = () => {
                     value={formData.email}
                     onChange={handleInputChange}
                     required
-                    className="bg-white/10 px-4 py-3 border border-white/20 focus:border-transparent rounded-lg focus:outline-none focus:ring-2 focus:ring-smart-green w-full text-white transition-all duration-200 placeholder-gray-400"
+                    disabled={isLoading}
+                    className="bg-white/10 px-4 py-3 border border-white/20 focus:border-transparent rounded-lg focus:outline-none focus:ring-2 focus:ring-smart-green w-full text-white transition-all duration-200 placeholder-gray-400 disabled:opacity-50"
                     placeholder={t('seu@email.com', 'your@email.com')}
                   />
                 </div>
@@ -177,17 +223,24 @@ const Contact: React.FC = () => {
                     onChange={handleInputChange}
                     required
                     rows={5}
-                    className="bg-white/10 px-4 py-3 border border-white/20 focus:border-transparent rounded-lg focus:outline-none focus:ring-2 focus:ring-smart-green w-full text-white transition-all duration-200 resize-none placeholder-gray-400"
+                    disabled={isLoading}
+                    className="bg-white/10 px-4 py-3 border border-white/20 focus:border-transparent rounded-lg focus:outline-none focus:ring-2 focus:ring-smart-green w-full text-white transition-all duration-200 resize-none placeholder-gray-400 disabled:opacity-50"
                     placeholder={t('Conte-nos sobre seu projeto...', 'Tell us about your project...')}
                   />
                 </div>
 
                 <button
                   type="submit"
-                  className="group flex justify-center items-center space-x-2 w-full btn-primary"
+                  disabled={isLoading}
+                  className="group flex justify-center items-center space-x-2 w-full btn-primary disabled:opacity-50 disabled:cursor-not-allowed"
                 >
-                  <span>{t('Enviar mensagem', 'Send message')}</span>
-                  <Send className="w-5 h-5 transition-transform group-hover:translate-x-1" />
+                  <span>
+                    {isLoading 
+                      ? t('Enviando...', 'Sending...') 
+                      : t('Enviar mensagem', 'Send message')
+                    }
+                  </span>
+                  <Send className={`w-5 h-5 transition-transform ${isLoading ? 'animate-pulse' : 'group-hover:translate-x-1'}`} />
                 </button>
               </form>
             )}

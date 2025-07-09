@@ -53,15 +53,15 @@ const Hero: React.FC = () => {
     <section id="home" className="min-h-screen flex items-center justify-center bg-gradient-to-br from-gray-50 to-white dark:from-gray-900 dark:to-gray-800 pt-20 transition-colors duration-300 relative overflow-hidden">
       {/* High-Tech Background */}
       <div className="absolute inset-0 overflow-hidden">
-        {/* Animated Grid Pattern */}
+        {/* Animated Grid Pattern - Enhanced for light theme */}
         <motion.div 
-          className="absolute inset-0 opacity-20 dark:opacity-30"
+          className="absolute inset-0 opacity-40 dark:opacity-30"
           style={{
             backgroundImage: `
-              linear-gradient(rgba(94, 244, 161, 0.3) 1px, transparent 1px),
-              linear-gradient(90deg, rgba(94, 244, 161, 0.3) 1px, transparent 1px),
-              linear-gradient(rgba(48, 213, 199, 0.2) 1px, transparent 1px),
-              linear-gradient(90deg, rgba(48, 213, 199, 0.2) 1px, transparent 1px)
+              linear-gradient(rgba(94, 244, 161, 0.4) 1px, transparent 1px),
+              linear-gradient(90deg, rgba(94, 244, 161, 0.4) 1px, transparent 1px),
+              linear-gradient(rgba(48, 213, 199, 0.3) 1px, transparent 1px),
+              linear-gradient(90deg, rgba(48, 213, 199, 0.3) 1px, transparent 1px)
             `,
             backgroundSize: '50px 50px, 50px 50px, 25px 25px, 25px 25px'
           }}
@@ -77,7 +77,7 @@ const Hero: React.FC = () => {
 
         {/* Code Brackets */}
         <motion.div
-          className="absolute top-20 left-20 text-6xl font-mono text-smart-green/30 dark:text-smart-green/40"
+          className="absolute top-20 left-20 text-6xl font-mono text-smart-green/40 dark:text-smart-green/40"
           animate={{
             rotate: [0, 5, -5, 0],
             scale: [1, 1.1, 1],
@@ -93,7 +93,7 @@ const Hero: React.FC = () => {
 
         {/* Design Elements - Bezier Curves */}
         <motion.svg
-          className="absolute top-1/3 right-1/4 w-40 h-40 opacity-20 dark:opacity-30"
+          className="absolute top-1/3 right-1/4 w-40 h-40 opacity-30 dark:opacity-30"
           viewBox="0 0 200 200"
           animate={{
             rotate: [0, 360],
@@ -120,18 +120,18 @@ const Hero: React.FC = () => {
           </defs>
         </motion.svg>
 
-        {/* Floating Tech Icons */}
+        {/* Floating Tech Icons - Enhanced visibility */}
         {[...Array(8)].map((_, i) => (
           <motion.div
             key={i}
-            className="absolute w-3 h-3 bg-smart-cyan/40 dark:bg-smart-cyan/50 rounded-full"
+            className="absolute w-3 h-3 bg-smart-cyan/50 dark:bg-smart-cyan/50 rounded-full"
             style={{
               left: `${10 + i * 12}%`,
               top: `${15 + (i % 3) * 25}%`,
             }}
             animate={{
               y: [0, -30, 0],
-              opacity: [0.3, 0.8, 0.3],
+              opacity: [0.4, 0.8, 0.4],
               scale: [1, 1.3, 1],
             }}
             transition={{
@@ -145,10 +145,10 @@ const Hero: React.FC = () => {
 
         {/* HTML Tags */}
         <motion.div
-          className="absolute bottom-32 left-16 text-2xl font-mono text-smart-cyan/40 dark:text-smart-cyan/50"
+          className="absolute bottom-32 left-16 text-2xl font-mono text-smart-cyan/50 dark:text-smart-cyan/50"
           animate={{
             y: [0, -10, 0],
-            opacity: [0.4, 0.8, 0.4],
+            opacity: [0.5, 0.8, 0.5],
           }}
           transition={{
             duration: 3,
@@ -161,7 +161,7 @@ const Hero: React.FC = () => {
 
         {/* CSS Braces */}
         <motion.div
-          className="absolute top-1/2 right-16 text-4xl font-mono text-smart-green/40 dark:text-smart-green/50"
+          className="absolute top-1/2 right-16 text-4xl font-mono text-smart-green/50 dark:text-smart-green/50"
           animate={{
             rotate: [0, 10, -10, 0],
             scale: [1, 1.2, 1],
@@ -177,9 +177,9 @@ const Hero: React.FC = () => {
 
         {/* JavaScript Function */}
         <motion.div
-          className="absolute bottom-20 right-1/3 text-sm font-mono text-smart-cyan/30 dark:text-smart-cyan/40 leading-tight"
+          className="absolute bottom-20 right-1/3 text-sm font-mono text-smart-cyan/40 dark:text-smart-cyan/40 leading-tight"
           animate={{
-            opacity: [0.3, 0.7, 0.3],
+            opacity: [0.4, 0.7, 0.4],
           }}
           transition={{
             duration: 4,
@@ -193,10 +193,10 @@ const Hero: React.FC = () => {
 
         {/* Design System Tokens */}
         <motion.div
-          className="absolute top-1/4 left-1/3 text-xs font-mono text-smart-green/30 dark:text-smart-green/40 leading-tight"
+          className="absolute top-1/4 left-1/3 text-xs font-mono text-smart-green/40 dark:text-smart-green/40 leading-tight"
           animate={{
             x: [0, 20, 0],
-            opacity: [0.3, 0.6, 0.3],
+            opacity: [0.4, 0.6, 0.4],
           }}
           transition={{
             duration: 5,
@@ -213,11 +213,11 @@ const Hero: React.FC = () => {
           {'}'}
         </motion.div>
 
-        {/* Geometric Shapes */}
+        {/* Geometric Shapes - Enhanced visibility */}
         {[...Array(6)].map((_, i) => (
           <motion.div
             key={i}
-            className="absolute border-2 border-smart-green/20 dark:border-smart-green/30"
+            className="absolute border-2 border-smart-green/30 dark:border-smart-green/30"
             style={{
               width: `${30 + i * 5}px`,
               height: `${30 + i * 5}px`,
@@ -240,10 +240,10 @@ const Hero: React.FC = () => {
 
         {/* React Components Structure */}
         <motion.div
-          className="absolute top-40 right-20 text-lg font-mono text-smart-cyan/30 dark:text-smart-cyan/40"
+          className="absolute top-40 right-20 text-lg font-mono text-smart-cyan/40 dark:text-smart-cyan/40"
           animate={{
             scale: [1, 1.1, 1],
-            opacity: [0.3, 0.6, 0.3],
+            opacity: [0.4, 0.6, 0.4],
           }}
           transition={{
             duration: 4,
@@ -256,7 +256,7 @@ const Hero: React.FC = () => {
 
         {/* Terminal Cursor */}
         <motion.div
-          className="absolute bottom-40 left-1/2 w-3 h-6 bg-smart-green/50 dark:bg-smart-green/60"
+          className="absolute bottom-40 left-1/2 w-3 h-6 bg-smart-green/60 dark:bg-smart-green/60"
           animate={{
             opacity: [0, 1, 0],
           }}
@@ -279,9 +279,9 @@ const Hero: React.FC = () => {
             ease: "easeInOut"
           }}
         >
-          <div className="w-4 h-6 border-2 border-smart-cyan/40 dark:border-smart-cyan/50 rounded-sm"></div>
-          <div className="w-6 h-4 border-2 border-smart-green/40 dark:border-smart-green/50 rounded-sm"></div>
-          <div className="w-8 h-5 border-2 border-smart-cyan/40 dark:border-smart-cyan/50 rounded-sm"></div>
+          <div className="w-4 h-6 border-2 border-smart-cyan/50 dark:border-smart-cyan/50 rounded-sm"></div>
+          <div className="w-6 h-4 border-2 border-smart-green/50 dark:border-smart-green/50 rounded-sm"></div>
+          <div className="w-8 h-5 border-2 border-smart-cyan/50 dark:border-smart-cyan/50 rounded-sm"></div>
         </motion.div>
       </div>
 
