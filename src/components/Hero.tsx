@@ -50,8 +50,122 @@ const Hero: React.FC = () => {
   ];
 
   return (
-    <section id="home" className="min-h-screen flex items-center justify-center bg-gradient-to-br from-gray-50 to-white dark:from-gray-900 dark:to-gray-800 pt-20 transition-colors duration-300">
-      <div className="container-width section-padding">
+    <section id="home" className="min-h-screen flex items-center justify-center bg-gradient-to-br from-gray-50 to-white dark:from-gray-900 dark:to-gray-800 pt-20 transition-colors duration-300 relative overflow-hidden">
+      {/* Animated Tech Background */}
+      <div className="absolute inset-0 overflow-hidden">
+        {/* Grid Pattern */}
+        <motion.div 
+          className="absolute inset-0 opacity-[0.03] dark:opacity-[0.08]"
+          style={{
+            backgroundImage: `
+              linear-gradient(rgba(94, 244, 161, 0.1) 1px, transparent 1px),
+              linear-gradient(90deg, rgba(94, 244, 161, 0.1) 1px, transparent 1px)
+            `,
+            backgroundSize: '50px 50px'
+          }}
+          animate={{
+            backgroundPosition: ['0px 0px', '50px 50px'],
+          }}
+          transition={{
+            duration: 20,
+            repeat: Infinity,
+            ease: "linear"
+          }}
+        />
+
+        {/* Floating Geometric Elements */}
+        {[...Array(6)].map((_, i) => (
+          <motion.div
+            key={i}
+            className="absolute w-2 h-2 bg-smart-green/20 dark:bg-smart-green/30 rounded-full"
+            style={{
+              left: `${15 + i * 15}%`,
+              top: `${10 + i * 12}%`,
+            }}
+            animate={{
+              y: [0, -20, 0],
+              opacity: [0.2, 0.8, 0.2],
+              scale: [1, 1.2, 1],
+            }}
+            transition={{
+              duration: 3 + i * 0.5,
+              repeat: Infinity,
+              delay: i * 0.3,
+              ease: "easeInOut"
+            }}
+          />
+        ))}
+
+        {/* Circuit Lines */}
+        <motion.svg
+          className="absolute top-1/4 right-1/4 w-64 h-64 opacity-[0.04] dark:opacity-[0.08]"
+          viewBox="0 0 200 200"
+          animate={{
+            rotate: [0, 360],
+          }}
+          transition={{
+            duration: 30,
+            repeat: Infinity,
+            ease: "linear"
+          }}
+        >
+          <path
+            d="M50 50 L150 50 L150 100 L100 100 L100 150 L150 150"
+            stroke="url(#techGradient)"
+            strokeWidth="2"
+            fill="none"
+            strokeDasharray="5,5"
+          />
+          <defs>
+            <linearGradient id="techGradient">
+              <stop offset="0%" stopColor="#5EF4A1" />
+              <stop offset="100%" stopColor="#30D5C7" />
+            </linearGradient>
+          </defs>
+        </motion.svg>
+
+        {/* Binary Code Stream */}
+        <motion.div
+          className="absolute left-1/4 top-0 text-smart-green/10 dark:text-smart-green/20 text-xs font-mono leading-tight"
+          animate={{
+            y: ['-100%', '100vh'],
+          }}
+          transition={{
+            duration: 15,
+            repeat: Infinity,
+            ease: "linear"
+          }}
+        >
+          101010<br/>110110<br/>010101<br/>101101<br/>
+          010010<br/>111000<br/>101010<br/>110110
+        </motion.div>
+
+        {/* Animated Hexagons */}
+        {[...Array(4)].map((_, i) => (
+          <motion.div
+            key={i}
+            className="absolute border border-smart-cyan/10 dark:border-smart-cyan/20"
+            style={{
+              width: '40px',
+              height: '40px',
+              clipPath: 'polygon(50% 0%, 100% 25%, 100% 75%, 50% 100%, 0% 75%, 0% 25%)',
+              right: `${10 + i * 20}%`,
+              bottom: `${20 + i * 15}%`,
+            }}
+            animate={{
+              rotate: [0, 360],
+              scale: [1, 1.1, 1],
+            }}
+            transition={{
+              duration: 8 + i * 2,
+              repeat: Infinity,
+              delay: i * 0.5,
+            }}
+          />
+        ))}
+      </div>
+
+      <div className="container-width section-padding relative z-10">
         <motion.div
           className="text-center max-w-4xl mx-auto"
           variants={containerVariants}

@@ -70,7 +70,7 @@ const About: React.FC = () => {
   ];
 
   return (
-    <section className="section-padding bg-gray-50 dark:bg-gray-800/50 transition-colors duration-300">
+    <section id="about" className="section-padding bg-gray-50 dark:bg-gray-800/50 transition-colors duration-300">
       <div className="container-width">
         <motion.div
           variants={containerVariants}
@@ -81,6 +81,31 @@ const About: React.FC = () => {
         >
           {/* Content Column */}
           <motion.div variants={itemVariants} className="space-y-6">
+            {/* Section Tag */}
+            <motion.div 
+              className="inline-flex items-center space-x-2 bg-gradient-to-r from-smart-green/10 to-smart-cyan/10 border border-smart-green/20 rounded-full px-4 py-2 mb-6"
+              variants={itemVariants}
+              whileHover={{ scale: 1.05 }}
+              transition={{ type: "spring", stiffness: 400 }}
+            >
+              <motion.div
+                animate={{ 
+                  rotate: [0, 360],
+                  scale: [1, 1.1, 1]
+                }}
+                transition={{ 
+                  duration: 3,
+                  repeat: Infinity,
+                  repeatDelay: 2
+                }}
+              >
+                <User className="w-4 h-4 text-smart-green" />
+              </motion.div>
+              <span className="text-sm font-medium text-gray-700 dark:text-gray-300">
+                {t('Sobre Nós', 'About Us')}
+              </span>
+            </motion.div>
+
             <motion.h2 
               variants={itemVariants}
               className="text-4xl lg:text-5xl font-bold font-poppins text-gray-900 dark:text-white"
