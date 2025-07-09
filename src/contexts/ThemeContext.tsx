@@ -26,9 +26,9 @@ export const ThemeProvider: React.FC<ThemeProviderProps> = ({ children }) => {
   const [theme, setTheme] = useState<Theme>(() => {
     if (typeof window !== 'undefined') {
       const saved = localStorage.getItem('theme');
-      return (saved as Theme) || 'light';
+      return (saved as Theme) || 'dark'; // Mudança aqui: padrão agora é 'dark' em vez de 'light'
     }
-    return 'light';
+    return 'dark'; // Mudança aqui: padrão agora é 'dark' em vez de 'light'
   });
 
   useEffect(() => {
