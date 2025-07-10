@@ -50,11 +50,11 @@ const Hero: React.FC = () => {
   ];
 
   return (
-    <section id="home" className="min-h-screen flex items-center justify-center bg-gradient-to-br from-gray-50 to-white dark:from-gray-900 dark:to-gray-800 pt-20 transition-colors duration-300 relative overflow-hidden">
+    <section id="home" className="relative flex justify-center items-center bg-gradient-to-br from-gray-50 dark:from-gray-900 to-white dark:to-gray-800 pt-20 min-h-screen overflow-hidden transition-colors duration-300">
       {/* High-Tech Background */}
       <div className="absolute inset-0 overflow-hidden">
         {/* Animated Grid Pattern - Enhanced for light theme */}
-        <motion.div 
+        <motion.div
           className="absolute inset-0 opacity-40 dark:opacity-30"
           style={{
             backgroundImage: `
@@ -77,7 +77,7 @@ const Hero: React.FC = () => {
 
         {/* Code Brackets */}
         <motion.div
-          className="absolute top-20 left-20 text-6xl font-mono text-smart-green/40 dark:text-smart-green/40"
+          className="top-20 left-20 absolute font-mono text-smart-green/40 dark:text-smart-green/40 text-6xl"
           animate={{
             rotate: [0, 5, -5, 0],
             scale: [1, 1.1, 1],
@@ -93,7 +93,7 @@ const Hero: React.FC = () => {
 
         {/* Design Elements - Bezier Curves */}
         <motion.svg
-          className="absolute top-1/3 right-1/4 w-40 h-40 opacity-30 dark:opacity-30"
+          className="top-1/3 right-1/4 absolute opacity-30 dark:opacity-30 w-40 h-40"
           viewBox="0 0 200 200"
           animate={{
             rotate: [0, 360],
@@ -124,7 +124,7 @@ const Hero: React.FC = () => {
         {[...Array(8)].map((_, i) => (
           <motion.div
             key={i}
-            className="absolute w-3 h-3 bg-smart-cyan/50 dark:bg-smart-cyan/50 rounded-full"
+            className="absolute bg-smart-cyan/50 dark:bg-smart-cyan/50 rounded-full w-3 h-3"
             style={{
               left: `${10 + i * 12}%`,
               top: `${15 + (i % 3) * 25}%`,
@@ -145,7 +145,7 @@ const Hero: React.FC = () => {
 
         {/* HTML Tags */}
         <motion.div
-          className="absolute bottom-32 left-16 text-2xl font-mono text-smart-cyan/50 dark:text-smart-cyan/50"
+          className="bottom-32 left-16 absolute font-mono text-smart-cyan/50 dark:text-smart-cyan/50 text-2xl"
           animate={{
             y: [0, -10, 0],
             opacity: [0.5, 0.8, 0.5],
@@ -161,7 +161,7 @@ const Hero: React.FC = () => {
 
         {/* CSS Braces */}
         <motion.div
-          className="absolute top-1/2 right-16 text-4xl font-mono text-smart-green/50 dark:text-smart-green/50"
+          className="top-1/2 right-16 absolute font-mono text-smart-green/50 dark:text-smart-green/50 text-4xl"
           animate={{
             rotate: [0, 10, -10, 0],
             scale: [1, 1.2, 1],
@@ -177,7 +177,7 @@ const Hero: React.FC = () => {
 
         {/* JavaScript Function */}
         <motion.div
-          className="absolute bottom-20 right-1/3 text-sm font-mono text-smart-cyan/40 dark:text-smart-cyan/40 leading-tight"
+          className="right-1/3 bottom-20 absolute font-mono text-sm text-smart-cyan/40 dark:text-smart-cyan/40 leading-tight"
           animate={{
             opacity: [0.4, 0.7, 0.4],
           }}
@@ -193,7 +193,7 @@ const Hero: React.FC = () => {
 
         {/* Design System Tokens */}
         <motion.div
-          className="absolute top-1/4 left-1/3 text-xs font-mono text-smart-green/40 dark:text-smart-green/40 leading-tight"
+          className="top-1/4 left-1/3 absolute font-mono text-xs text-smart-green/40 dark:text-smart-green/40 leading-tight"
           animate={{
             x: [0, 20, 0],
             opacity: [0.4, 0.6, 0.4],
@@ -240,7 +240,7 @@ const Hero: React.FC = () => {
 
         {/* React Components Structure */}
         <motion.div
-          className="absolute top-40 right-20 text-lg font-mono text-smart-cyan/40 dark:text-smart-cyan/40"
+          className="top-40 right-20 absolute font-mono text-smart-cyan/40 dark:text-smart-cyan/40 text-lg"
           animate={{
             scale: [1, 1.1, 1],
             opacity: [0.4, 0.6, 0.4],
@@ -256,7 +256,7 @@ const Hero: React.FC = () => {
 
         {/* Terminal Cursor */}
         <motion.div
-          className="absolute bottom-40 left-1/2 w-3 h-6 bg-smart-green/60 dark:bg-smart-green/60"
+          className="bottom-40 left-1/2 absolute bg-smart-green/60 dark:bg-smart-green/60 w-3 h-6"
           animate={{
             opacity: [0, 1, 0],
           }}
@@ -269,7 +269,7 @@ const Hero: React.FC = () => {
 
         {/* Responsive Design Icons */}
         <motion.div
-          className="absolute top-60 left-10 flex space-x-2"
+          className="top-60 left-10 absolute flex space-x-2"
           animate={{
             y: [0, -15, 0],
           }}
@@ -279,32 +279,32 @@ const Hero: React.FC = () => {
             ease: "easeInOut"
           }}
         >
-          <div className="w-4 h-6 border-2 border-smart-cyan/50 dark:border-smart-cyan/50 rounded-sm"></div>
-          <div className="w-6 h-4 border-2 border-smart-green/50 dark:border-smart-green/50 rounded-sm"></div>
-          <div className="w-8 h-5 border-2 border-smart-cyan/50 dark:border-smart-cyan/50 rounded-sm"></div>
+          <div className="border-2 border-smart-cyan/50 dark:border-smart-cyan/50 rounded-sm w-4 h-6"></div>
+          <div className="border-2 border-smart-green/50 dark:border-smart-green/50 rounded-sm w-6 h-4"></div>
+          <div className="border-2 border-smart-cyan/50 dark:border-smart-cyan/50 rounded-sm w-8 h-5"></div>
         </motion.div>
       </div>
 
-      <div className="container-width section-padding relative z-10">
+      <div className="z-10 relative container-width section-padding">
         <motion.div
-          className="text-center max-w-4xl mx-auto"
+          className="mx-auto max-w-4xl text-center"
           variants={containerVariants}
           initial="hidden"
           animate="visible"
         >
           {/* Hero Badge */}
-          <motion.div 
-            className="inline-flex items-center space-x-2 bg-gradient-to-r from-smart-green/10 to-smart-cyan/10 border border-smart-green/20 rounded-full px-4 py-2 mb-8"
+          <motion.div
+            className="inline-flex items-center space-x-2 bg-gradient-to-r from-smart-green/10 to-smart-cyan/10 mb-8 px-4 py-2 border border-smart-green/20 rounded-full"
             variants={itemVariants}
             whileHover={{ scale: 1.05 }}
             transition={{ type: "spring", stiffness: 400 }}
           >
             <motion.div
-              animate={{ 
+              animate={{
                 rotate: [0, 360],
                 scale: [1, 1.2, 1]
               }}
-              transition={{ 
+              transition={{
                 duration: 2,
                 repeat: Infinity,
                 repeatDelay: 3
@@ -312,23 +312,23 @@ const Hero: React.FC = () => {
             >
               <Zap className="w-4 h-4 text-smart-green" />
             </motion.div>
-            <span className="text-sm font-medium text-gray-700 dark:text-gray-300">
+            <span className="font-medium text-gray-700 dark:text-gray-300 text-sm">
               {t('Soluções Web Inovadoras', 'Innovative Web Solutions')}
             </span>
           </motion.div>
 
           {/* Main Heading */}
-          <motion.h1 
-            className="text-4xl sm:text-5xl lg:text-6xl font-bold text-gray-900 dark:text-white mb-6 leading-tight"
+          <motion.h1
+            className="mb-6 font-bold text-gray-900 dark:text-white text-4xl sm:text-5xl lg:text-6xl leading-tight"
             variants={itemVariants}
           >
             {t('Transforme sua', 'Transform your')}{' '}
-            <motion.span 
+            <motion.span
               className="gradient-text"
-              animate={{ 
+              animate={{
                 backgroundPosition: ['0% 50%', '100% 50%', '0% 50%']
               }}
-              transition={{ 
+              transition={{
                 duration: 3,
                 repeat: Infinity,
                 ease: "linear"
@@ -340,42 +340,44 @@ const Hero: React.FC = () => {
           </motion.h1>
 
           {/* Subtitle */}
-          <motion.p 
-            className="text-lg sm:text-xl text-gray-600 dark:text-gray-300 mb-10 max-w-2xl mx-auto leading-relaxed"
+          <motion.p
+            className="mx-auto mb-10 max-w-2xl text-gray-600 dark:text-gray-300 text-lg sm:text-xl leading-relaxed"
             variants={itemVariants}
           >
             {t(
-              'Criamos websites, landing pages e e-commerce que convertem visitantes em clientes. Design moderno, performance excepcional.',
-              'We create websites, landing pages, and e-commerce that convert visitors into customers. Modern design, exceptional performance.'
+              'Criamos websites, landing pages e e-commerce que convertem visitantes em clientes. Design moderno e performance excepcional.',
+              'We create websites, landing pages, and e-commerce that convert visitors into customers. Modern design and exceptional performance.'
             )}
           </motion.p>
 
           {/* CTA Buttons */}
-          <motion.div 
-            className="flex flex-col sm:flex-row gap-4 justify-center items-center mb-16"
+          <motion.div
+            className="flex sm:flex-row flex-col justify-center items-center gap-4 mb-16"
             variants={itemVariants}
           >
-            <motion.button 
-              className="btn-primary flex items-center space-x-2 group"
-              whileHover={{ 
-                scale: 1.05,
-                y: -3,
-                boxShadow: "0 20px 25px -5px rgba(94, 244, 161, 0.3)"
-              }}
-              whileTap={{ scale: 0.95 }}
-              transition={{ type: "spring", stiffness: 400 }}
-            >
-              <span>{t('Iniciar Projeto', 'Start Project')}</span>
-              <motion.div
-                className="group-hover:translate-x-1 transition-transform"
-                whileHover={{ x: 5 }}
+            <a href="#contact">
+              <motion.button
+                className="group flex items-center space-x-2 btn-primary"
+                whileHover={{
+                  scale: 1.05,
+                  y: -3,
+                  boxShadow: "0 20px 25px -5px rgba(94, 244, 161, 0.3)"
+                }}
+                whileTap={{ scale: 0.95 }}
+                transition={{ type: "spring", stiffness: 400 }}
               >
-                <ArrowRight className="w-5 h-5" />
-              </motion.div>
-            </motion.button>
-            <motion.button 
+                <span>{t('Iniciar Projeto', 'Start Project')}</span>
+                <motion.div
+                  className="transition-transform group-hover:translate-x-1"
+                  whileHover={{ x: 5 }}
+                >
+                  <ArrowRight className="w-5 h-5" />
+                </motion.div>
+              </motion.button>
+            </a>
+            <motion.button
               className="btn-secondary"
-              whileHover={{ 
+              whileHover={{
                 scale: 1.05,
                 y: -3
               }}
@@ -387,23 +389,23 @@ const Hero: React.FC = () => {
           </motion.div>
 
           {/* Feature Icons */}
-          <motion.div 
-            className="grid grid-cols-1 sm:grid-cols-3 gap-8 max-w-2xl mx-auto"
+          <motion.div
+            className="gap-8 grid grid-cols-1 sm:grid-cols-3 mx-auto max-w-2xl"
             variants={containerVariants}
           >
             {features.map((feature, index) => (
               <motion.div
                 key={index}
-                className="flex flex-col items-center space-y-3 group"
+                className="group flex flex-col items-center space-y-3"
                 variants={itemVariants}
-                whileHover={{ 
+                whileHover={{
                   y: -10,
                   transition: { type: "spring", stiffness: 400 }
                 }}
               >
-                <motion.div 
-                  className="w-16 h-16 bg-gradient-to-br from-smart-green/10 to-smart-cyan/10 dark:from-smart-green/20 dark:to-smart-cyan/20 rounded-2xl flex items-center justify-center group-hover:scale-110 transition-transform duration-300"
-                  whileHover={{ 
+                <motion.div
+                  className="flex justify-center items-center bg-gradient-to-br from-smart-green/10 dark:from-smart-green/20 to-smart-cyan/10 dark:to-smart-cyan/20 rounded-2xl w-16 h-16 group-hover:scale-110 transition-transform duration-300"
+                  whileHover={{
                     scale: 1.2,
                     rotate: 5,
                     boxShadow: "0 10px 25px -5px rgba(94, 244, 161, 0.3)"
@@ -411,10 +413,10 @@ const Hero: React.FC = () => {
                   transition={{ type: "spring", stiffness: 400 }}
                 >
                   <motion.div
-                    animate={{ 
+                    animate={{
                       rotate: [0, 5, -5, 0]
                     }}
-                    transition={{ 
+                    transition={{
                       duration: 2,
                       repeat: Infinity,
                       repeatDelay: 3 + index
@@ -423,14 +425,14 @@ const Hero: React.FC = () => {
                     <feature.icon className="w-8 h-8 text-smart-green" />
                   </motion.div>
                 </motion.div>
-                <motion.h3 
+                <motion.h3
                   className="font-semibold text-gray-900 dark:text-white"
                   whileHover={{ scale: 1.05 }}
                 >
                   {feature.title}
                 </motion.h3>
-                <motion.p 
-                  className="text-sm text-gray-600 dark:text-gray-400 text-center"
+                <motion.p
+                  className="text-gray-600 dark:text-gray-400 text-sm text-center"
                   whileHover={{ scale: 1.02 }}
                 >
                   {feature.description}

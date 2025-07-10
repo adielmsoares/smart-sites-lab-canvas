@@ -1,7 +1,7 @@
 
 import React from 'react';
 import { useLanguage } from '../contexts/LanguageContext';
-import { Mail, Phone, MapPin, Heart, Facebook, Twitter, Linkedin, Instagram } from 'lucide-react';
+import { Mail, Phone, MapPin, Heart, Facebook, Twitter, Linkedin, Instagram, X, Target } from 'lucide-react';
 import { motion, useInView } from 'framer-motion';
 import { useRef } from 'react';
 import smartsitesLogo from './assets/img/smartsites-logo.png';
@@ -26,10 +26,8 @@ const Footer: React.FC = () => {
   ];
 
   const socialLinks = [
-    { icon: Facebook, href: '#', label: 'Facebook' },
-    { icon: Twitter, href: '#', label: 'Twitter' },
     { icon: Linkedin, href: '#', label: 'LinkedIn' },
-    { icon: Instagram, href: '#', label: 'Instagram' },
+    { icon: Instagram, href: 'https://www.instagram.com/smartsiteslab/', label: 'Instagram' },
   ];
 
   const containerVariants = {
@@ -198,6 +196,8 @@ const Footer: React.FC = () => {
                 <motion.a
                   key={index}
                   href={social.href}
+                  target="_blank"
+                  rel="noopener noreferrer"
                   className="flex justify-center items-center bg-gray-800 hover:bg-smart-green rounded-full w-10 h-10 text-gray-400 hover:text-black transition-all duration-200"
                   aria-label={social.label}
                   whileHover={{

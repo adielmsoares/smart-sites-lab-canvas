@@ -71,23 +71,25 @@ const Header: React.FC = () => {
       <div className="container-width">
         <div className="flex justify-between items-center h-16 sm:h-20">
           {/* Logo */}
-          <motion.div
-            className="flex items-center space-x-3"
-            whileHover={{ scale: 1.02 }}
-            transition={{ type: "spring", stiffness: 400 }}
-          >
-            <motion.img
-              src={smartsitesLogo} // Use a variável importada aqui
-              alt="Smart Sites Lab Logo"
-              className="w-8 sm:w-10 h-8 sm:h-10"
-              whileHover={{ rotate: 5 }}
-              transition={{ type: "spring", stiffness: 300 }}
-            />
-            <div className="flex items-center space-x-2">
-              <span className="font-bold text-black dark:text-white text-lg sm:text-xl">Smart Sites</span>
-              <span className="font-light text-gray-600 dark:text-gray-400 text-lg sm:text-xl">Lab</span>
-            </div>
-          </motion.div>
+          <a href="#home">
+            <motion.div
+              className="flex items-center space-x-3"
+              whileHover={{ scale: 1.02 }}
+              transition={{ type: "spring", stiffness: 400 }}
+            >
+              <motion.img
+                src={smartsitesLogo}
+                alt="Smart Sites Lab Logo"
+                className="w-8 sm:w-10 h-8 sm:h-10"
+                whileHover={{ rotate: 5 }}
+                transition={{ type: "spring", stiffness: 300 }}
+              />
+              <div className="flex items-center space-x-2">
+                <span className="font-bold text-black dark:text-white text-lg sm:text-xl">Smart Sites</span>
+                <span className="font-light text-gray-600 dark:text-gray-400 text-lg sm:text-xl">Lab</span>
+              </div>
+            </motion.div>
+          </a>
 
           {/* Desktop Navigation */}
           <nav className="hidden lg:flex items-center space-x-8">
