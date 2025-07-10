@@ -375,17 +375,19 @@ const Hero: React.FC = () => {
                 </motion.div>
               </motion.button>
             </a>
-            <motion.button
-              className="btn-secondary"
-              whileHover={{
-                scale: 1.05,
-                y: -3
-              }}
-              whileTap={{ scale: 0.95 }}
-              transition={{ type: "spring", stiffness: 400 }}
-            >
-              {t('Ver Portfólio', 'View Portfolio')}
-            </motion.button>
+            <a href="#portfolio">
+              <motion.button
+                className="btn-secondary"
+                whileHover={{
+                  scale: 1.05,
+                  y: -3
+                }}
+                whileTap={{ scale: 0.95 }}
+                transition={{ type: "spring", stiffness: 400 }}
+              >
+                {t('Ver Portfólio', 'View Portfolio')}
+              </motion.button>
+            </a>
           </motion.div>
 
           {/* Feature Icons */}
