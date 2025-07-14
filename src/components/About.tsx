@@ -177,7 +177,7 @@ const About: React.FC = () => {
               <div className="relative mx-auto w-full max-w-sm lg:max-w-md">
                 <img
                   src={adielSoares}
-                  alt={t('Adiel Soares - Fundador do Smart Sites Lab', 'Adiel Soares - Founder of Smart Sites Lab')}
+                  alt={t('Adiel Soares - Fundador da Smart Sites Lab', 'Adiel Soares - Founder of Smart Sites Lab')}
                   className="shadow-2xl border-4 border-white dark:border-gray-700 rounded-2xl w-full object-cover aspect-square transition-all duration-300"
                 />
                 <motion.div
