@@ -1,48 +1,45 @@
-import React, { useState, useRef } from 'react';
-const useLanguage = () => ({
-  t: (pt: string, en: string) => (Math.random() > 0.5 ? pt : en),
-});
+import React, { useState } from 'react';
+import { useLanguage } from '../contexts/LanguageContext';
 import { Mail, Phone, MapPin, Send, CheckCircle, AlertCircle } from 'lucide-react';
 import emailjs from '@emailjs/browser';
 
 const Contact: React.FC = () => {
   const { t } = useLanguage();
-  const form = useRef<HTMLFormElement>(null);
+  const [formData, setFormData] = useState({
+    name: '',
+    email: '',
+    message: '',
+  });
   const [isSubmitted, setIsSubmitted] = useState(false);
   const [isLoading, setIsLoading] = useState(false);
   const [error, setError] = useState('');
 
-  // Variáveis de ambiente para segurança e flexibilidade
-  const serviceID = process.env.VITE_EMAILJS_SERVICE_ID || 'service_1c2p2fm';
-  const templateID = process.env.VITE_EMAILJS_TEMPLATE_ID || 'template_mga94eh';
-  const publicKey = process.env.VITE_EMAILJS_PUBLIC_KEY || 'FmYCUQTnOJg_A92Vn';
-
+  const handleInputChange = (e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>) => {
+    const { name, value } = e.target;
+    setFormData(prev => ({ ...prev, [name]: value }));
+    if (error) setError('');
+  };
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
     setIsLoading(true);
     setError('');
 
-    if (!form.current) {
-      setError("Ocorreu um erro inesperado. O formulário não foi encontrado.");
-      setIsLoading(false);
-      return;
-    }
-
-    // Validação simples para garantir que as chaves não estão vazias
-    if (!serviceID || !templateID || !publicKey) {
-      setError(t('As chaves do serviço de e-mail não foram configuradas.', 'Email service keys are not configured.'));
-      setIsLoading(false);
-      return;
-    }
-
     try {
-      await emailjs.sendForm(serviceID, templateID, form.current, publicKey);
+      await emailjs.send(
+        'service_1c2p2fm', // 🔁 seu service ID
+        'template_mga94eh', // 🔁 seu template ID
+        {
+          from_name: formData.name,
+          reply_to: formData.email,
+          message: formData.message
+        },
+        'FmYCUQTnOJg_A92Vn' // 🔁 sua public key
+      );
 
       setIsSubmitted(true);
-      form.current.reset(); // Limpa o formulário
+      setFormData({ name: '', email: '', message: '' });
       setTimeout(() => setIsSubmitted(false), 5000);
-
     } catch (err) {
       console.error('Erro ao enviar e-mail:', err);
       setError(
@@ -57,18 +54,18 @@ const Contact: React.FC = () => {
   };
 
   return (
-    <section id="contact" className="bg-gray-900 px-4 sm:px-6 lg:px-8 py-20 text-white">
-      <div className="mx-auto max-w-7xl">
+    <section id="contact" className="bg-smart-dark text-white section-padding">
+      <div className="container-width">
         <div className="mb-16 text-center">
           <div className="inline-flex items-center space-x-2 bg-white/10 mb-6 px-4 py-2 border border-white/20 rounded-full">
-            <Mail className="w-4 h-4 text-green-400" />
+            <Mail className="w-4 h-4 text-smart-green" />
             <span className="font-medium text-white text-sm">
               {t('Contato', 'Contact')}
             </span>
           </div>
           <h2 className="mb-6 font-bold text-white text-3xl sm:text-4xl lg:text-5xl">
             {t('Vamos criar algo', 'Let\'s create something')}{' '}
-            <span className="bg-clip-text bg-gradient-to-r from-green-400 to-teal-500 text-transparent">
+            <span className="gradient-text">
               {t('incrível juntos', 'amazing together')}
             </span>
           </h2>
@@ -87,10 +84,9 @@ const Contact: React.FC = () => {
             </h3>
 
             <div className="space-y-6">
-              {/* Informações de Contato */}
               <div className="flex items-start space-x-4">
-                <div className="flex flex-shrink-0 justify-center items-center bg-green-500/20 rounded-lg w-12 h-12">
-                  <Mail className="w-6 h-6 text-green-400" />
+                <div className="flex justify-center items-center bg-smart-green/20 rounded-lg w-12 h-12">
+                  <Mail className="w-6 h-6 text-smart-green" />
                 </div>
                 <div>
                   <h4 className="mb-1 font-semibold text-white">
@@ -101,8 +97,8 @@ const Contact: React.FC = () => {
               </div>
 
               <div className="flex items-start space-x-4">
-                <div className="flex flex-shrink-0 justify-center items-center bg-green-500/20 rounded-lg w-12 h-12">
-                  <Phone className="w-6 h-6 text-green-400" />
+                <div className="flex justify-center items-center bg-smart-green/20 rounded-lg w-12 h-12">
+                  <Phone className="w-6 h-6 text-smart-green" />
                 </div>
                 <div>
                   <h4 className="mb-1 font-semibold text-white">
@@ -113,8 +109,8 @@ const Contact: React.FC = () => {
               </div>
 
               <div className="flex items-start space-x-4">
-                <div className="flex flex-shrink-0 justify-center items-center bg-green-500/20 rounded-lg w-12 h-12">
-                  <MapPin className="w-6 h-6 text-green-400" />
+                <div className="flex justify-center items-center bg-smart-green/20 rounded-lg w-12 h-12">
+                  <MapPin className="w-6 h-6 text-smart-green" />
                 </div>
                 <div>
                   <h4 className="mb-1 font-semibold text-white">
@@ -154,7 +150,7 @@ const Contact: React.FC = () => {
             {isSubmitted ? (
               <div className="flex justify-center items-center py-12">
                 <div className="text-center">
-                  <CheckCircle className="mx-auto mb-4 w-16 h-16 text-green-400" />
+                  <CheckCircle className="mx-auto mb-4 w-16 h-16 text-smart-green" />
                   <h4 className="mb-2 font-semibold text-white text-xl">
                     {t('Mensagem enviada!', 'Message sent!')}
                   </h4>
@@ -164,33 +160,37 @@ const Contact: React.FC = () => {
                 </div>
               </div>
             ) : (
-              <form ref={form} onSubmit={handleSubmit} className="space-y-6">
+              <form onSubmit={handleSubmit} className="space-y-6">
                 <div>
-                  <label htmlFor="from_name" className="block mb-2 font-medium text-white text-sm">
+                  <label htmlFor="name" className="block mb-2 font-medium text-white text-sm">
                     {t('Nome completo', 'Full name')}
                   </label>
                   <input
                     type="text"
-                    id="from_name"
-                    name="from_name" // O 'name' deve corresponder à variável do template EmailJS
+                    id="name"
+                    name="name"
+                    value={formData.name}
+                    onChange={handleInputChange}
                     required
                     disabled={isLoading}
-                    className="bg-white/10 disabled:opacity-50 px-4 py-3 border border-white/20 focus:border-transparent rounded-lg focus:outline-none focus:ring-2 focus:ring-green-400 w-full text-white transition-all duration-200 placeholder-gray-400"
+                    className="bg-white/10 disabled:opacity-50 px-4 py-3 border border-white/20 focus:border-transparent rounded-lg focus:outline-none focus:ring-2 focus:ring-smart-green w-full text-white transition-all duration-200 placeholder-gray-400"
                     placeholder={t('Seu nome', 'Your name')}
                   />
                 </div>
 
                 <div>
-                  <label htmlFor="reply_to" className="block mb-2 font-medium text-white text-sm">
+                  <label htmlFor="email" className="block mb-2 font-medium text-white text-sm">
                     {t('Email', 'Email')}
                   </label>
                   <input
                     type="email"
-                    id="reply_to"
-                    name="reply_to" // O 'name' deve corresponder à variável do template EmailJS
+                    id="email"
+                    name="email"
+                    value={formData.email}
+                    onChange={handleInputChange}
                     required
                     disabled={isLoading}
-                    className="bg-white/10 disabled:opacity-50 px-4 py-3 border border-white/20 focus:border-transparent rounded-lg focus:outline-none focus:ring-2 focus:ring-green-400 w-full text-white transition-all duration-200 placeholder-gray-400"
+                    className="bg-white/10 disabled:opacity-50 px-4 py-3 border border-white/20 focus:border-transparent rounded-lg focus:outline-none focus:ring-2 focus:ring-smart-green w-full text-white transition-all duration-200 placeholder-gray-400"
                     placeholder={t('seu@email.com', 'your@email.com')}
                   />
                 </div>
@@ -201,11 +201,13 @@ const Contact: React.FC = () => {
                   </label>
                   <textarea
                     id="message"
-                    name="message" // O 'name' deve corresponder à variável do template EmailJS
+                    name="message"
+                    value={formData.message}
+                    onChange={handleInputChange}
                     required
                     rows={5}
                     disabled={isLoading}
-                    className="bg-white/10 disabled:opacity-50 px-4 py-3 border border-white/20 focus:border-transparent rounded-lg focus:outline-none focus:ring-2 focus:ring-green-400 w-full text-white transition-all duration-200 resize-none placeholder-gray-400"
+                    className="bg-white/10 disabled:opacity-50 px-4 py-3 border border-white/20 focus:border-transparent rounded-lg focus:outline-none focus:ring-2 focus:ring-smart-green w-full text-white transition-all duration-200 resize-none placeholder-gray-400"
                     placeholder={t('Conte-nos sobre seu projeto...', 'Tell us about your project...')}
                   />
                 </div>
@@ -213,7 +215,7 @@ const Contact: React.FC = () => {
                 <button
                   type="submit"
                   disabled={isLoading}
-                  className="group flex justify-center items-center space-x-2 bg-green-500 hover:bg-green-600 disabled:opacity-50 px-4 py-3 rounded-lg w-full font-bold text-white transition-all duration-300 disabled:cursor-not-allowed"
+                  className="group flex justify-center items-center space-x-2 disabled:opacity-50 w-full disabled:cursor-not-allowed btn-primary"
                 >
                   <span>
                     {isLoading
