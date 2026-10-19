@@ -2,7 +2,7 @@ import React from 'react';
 import { motion } from 'framer-motion';
 import { useLanguage } from '../contexts/LanguageContext';
 import { Badge } from './ui/badge';
-import { Bookmark, Code, Palette, Zap, User, Instagram } from 'lucide-react';
+import { Bookmark, Code, Palette, Zap, User, Linkedin } from 'lucide-react';
 import adielSoares from './assets/img/adiel-soares.jpg';
 
 const About: React.FC = () => {
@@ -185,7 +185,7 @@ const About: React.FC = () => {
                   whileHover={{ scale: 1.1, rotate: 10 }}
                   transition={{ type: "spring", stiffness: 400, damping: 10 }}
                 >
-                  <a href='https://www.instagram.com/adielmsoares/' target='_blank'><Instagram className="w-8 h-8 text-black" /></a>
+                  <a href='https://www.linkedin.com/in/adiel-soares-122579145/' target='_blank'><Linkedin className="w-8 h-8 text-black" /></a>
                 </motion.div>
               </div>
             </div>

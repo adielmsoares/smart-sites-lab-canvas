@@ -99,7 +99,7 @@ const Footer: React.FC = () => {
                 {[
                   { icon: Mail, text: 'smartsiteslab@gmail.com' },
                   { icon: Phone, text: '+55 (61) 99112-7447' },
-                  { icon: MapPin, text: 'Atendimento Remoto | Brasília - DF | Belo Horizonte - MG ' }
+                  { icon: MapPin, text: 'Atendimento Remoto | Brasília - DF | Goiânia - GO ' }
                 ].map((contact, index) => (
                   <motion.div
                     key={index}

@@ -116,7 +116,7 @@ const Contact: React.FC = () => {
                   <h4 className="mb-1 font-semibold text-white">
                     {t('Localização', 'Location')}
                   </h4>
-                  <p className="text-gray-300">Brasília - DF | Belo Horizonte - MG</p>
+                  <p className="text-gray-300">Brasília - DF | Goiânia - GO</p>
                   <p className="text-gray-300">{t('Atendimento remoto', 'Remote service')}</p>
                 </div>
               </div>
