@@ -1,20 +1,26 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="pt-BR" class="dark">
 
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Smart Sites Lab - Web Solutions</title>
-  <meta name="description" content="Innovative web development agency specializing in modern websites, landing pages, sales pages, and e-commerce solutions." />
+  <title>Smart Sites Lab | Criação de sites profissionais, landing pages e lojas virtuais</title>
+  <meta name="description" content="Criação de sites profissionais, landing pages, lojas virtuais e sistemas web para empresas que querem apresentar melhor seus serviços, ganhar credibilidade e receber mais contatos. Atendimento remoto." />
   <meta name="author" content="Smart Sites Lab" />
+  <meta name="theme-color" content="#080b0a" />
 
-  <meta property="og:title" content="Smart Sites Lab - Modern Web Solutions" />
-  <meta property="og:description" content="Innovative web development agency specializing in modern websites, landing pages, sales pages, and e-commerce solutions." />
+  <meta property="og:site_name" content="Smart Sites Lab" />
+  <meta property="og:locale" content="pt_BR" />
+  <meta property="og:locale:alternate" content="en_US" />
+  <meta property="og:title" content="Smart Sites Lab | Sites profissionais para empresas" />
+  <meta property="og:description" content="Sites, landing pages, lojas virtuais e sistemas web desenvolvidos com atenção ao design, à navegação e às necessidades de cada negócio." />
   <meta property="og:type" content="website" />
   <meta property="og:image" content="/smartsites-logo.png" />
+  <meta property="og:image:alt" content="Logotipo da Smart Sites Lab" />
 
-  <meta name="twitter:card" content="summary_large_image" />
-  <meta name="twitter:site" content="@smartsiteslab" />
+  <meta name="twitter:card" content="summary" />
+  <meta name="twitter:title" content="Smart Sites Lab | Sites profissionais para empresas" />
+  <meta name="twitter:description" content="Sites, landing pages, lojas virtuais e sistemas web para empresas de diferentes segmentos." />
   <meta name="twitter:image" content="/smartsites-logo.png" />
 
   <link rel="icon" href="/smartsites-logo.png" type="image/png">
@@ -22,7 +28,29 @@
 
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700;800&family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+  <link href="https://fonts.googleapis.com/css2?family=Bricolage+Grotesque:opsz,wght@12..96,400..700&family=Inter:wght@400;500;600&family=JetBrains+Mono:wght@500&display=swap" rel="stylesheet">
+
+  <script>
+    // Aplica o tema salvo antes da primeira pintura para evitar flash
+    try {
+      if (localStorage.getItem('theme') === 'light') document.documentElement.classList.remove('dark');
+    } catch (e) { }
+  </script>
+
+  <script type="application/ld+json">
+  {
+    "@context": "https://schema.org",
+    "@type": "ProfessionalService",
+    "name": "Smart Sites Lab",
+    "description": "Criação de sites profissionais, landing pages, lojas virtuais, sistemas web e UX/UI design.",
+    "email": "smartsiteslab@gmail.com",
+    "telephone": "+55-61-99112-7447",
+    "logo": "/smartsites-logo.png",
+    "areaServed": ["Brasília - DF", "Goiânia - GO", "BR"],
+    "sameAs": ["https://www.instagram.com/smartsiteslab/"],
+    "founder": { "@type": "Person", "name": "Adiel Soares" }
+  }
+  </script>
 </head>
 
 <body>

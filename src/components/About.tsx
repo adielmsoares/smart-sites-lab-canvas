@@ -1,194 +1,98 @@
 import React from 'react';
 import { motion } from 'framer-motion';
+import { ArrowUpRight } from 'lucide-react';
 import { useLanguage } from '../contexts/LanguageContext';
-import { Badge } from './ui/badge';
-import { Bookmark, Code, Palette, Zap, User, Linkedin } from 'lucide-react';
+import { easeOut, fadeUp, inViewOnce, stagger } from '@/lib/motion';
+import BrandMark from './BrandMark';
 import adielSoares from './assets/img/adiel-soares.jpg';
 
 const About: React.FC = () => {
   const { t } = useLanguage();
 
-  const containerVariants = {
-    hidden: { opacity: 0 },
-    visible: {
-      opacity: 1,
-      transition: {
-        staggerChildren: 0.2,
-        delayChildren: 0.1
-      }
-    }
-  };
-
-  const itemVariants = {
-    hidden: { y: 30, opacity: 0 },
-    visible: {
-      y: 0,
-      opacity: 1,
-      transition: {
-        type: "spring" as const,
-        damping: 20,
-        stiffness: 100
-      }
-    }
-  };
-
-  const imageVariants = {
-    hidden: { scale: 0.8, opacity: 0 },
-    visible: {
-      scale: 1,
-      opacity: 1,
-      transition: {
-        type: "spring" as const,
-        damping: 15,
-        stiffness: 100,
-        delay: 0.2
-      }
-    }
-  };
-
-  const badges = [
-    {
-      icon: User,
-      ptText: "Fundador",
-      enText: "Founder"
-    },
-    {
-      icon: Palette,
-      ptText: "Estrategista UX",
-      enText: "UX Strategist"
-    },
-    {
-      icon: Code,
-      ptText: "Frontend Specialist",
-      enText: "Frontend Specialist"
-    },
-    {
-      icon: Zap,
-      ptText: "Design Systems",
-      enText: "Design Systems"
-    }
+  const facts = [
+    { term: t('Especialidades', 'Expertise'), value: 'UX/UI Design · Design Systems · Frontend' },
+    { term: t('Tecnologias', 'Technologies'), value: 'React · TypeScript · Tailwind CSS' },
+    { term: t('Atendimento', 'Service'), value: t('Remoto · Brasília - DF e Goiânia - GO', 'Remote · Brasília - DF and Goiânia - GO') },
   ];
 
   return (
-    <section id="about" className="bg-gray-50 dark:bg-gray-800/50 transition-colors duration-300 section-padding">
-      <div className="container-width">
+    <section id="about" aria-labelledby="about-title" className="relative overflow-hidden section-padding">
+      <div className="items-center gap-14 lg:gap-20 grid lg:grid-cols-12 container-width">
         <motion.div
-          variants={containerVariants}
+          className="relative lg:col-span-5 mx-auto w-full lg:max-w-none max-w-md"
+          initial={{ opacity: 0, y: 30 }}
+          whileInView={{ opacity: 1, y: 0 }}
+          viewport={inViewOnce}
+          transition={{ duration: 1, ease: easeOut }}
+        >
+          <BrandMark strokeWidth={26} className="-top-10 sm:-top-14 -left-10 sm:-left-14 absolute opacity-80 w-40 sm:w-52 h-40 sm:h-52" />
+          <div className="relative bg-surface border border-border rounded-[2rem] overflow-hidden">
+            <img
+              src={adielSoares}
+              alt={t('Adiel Soares, fundador da Smart Sites Lab', 'Adiel Soares, founder of Smart Sites Lab')}
+              loading="lazy"
+              decoding="async"
+              width={640}
+              height={800}
+              className="w-full object-cover aspect-[4/5]"
+            />
+            <div className="bottom-0 absolute inset-x-0 bg-gradient-to-t from-black/75 to-transparent p-6 pt-20">
+              <p className="font-display font-semibold text-white text-xl">Adiel Soares</p>
+              <p className="text-white/75 text-sm">{t('Fundador · UX/UI Designer Sênior', 'Founder · Senior UX/UI Designer')}</p>
+            </div>
+          </div>
+        </motion.div>
+
+        <motion.div
+          className="lg:col-span-7"
+          variants={stagger(0.1)}
           initial="hidden"
           whileInView="visible"
-          viewport={{ once: true, amount: 0.3 }}
-          className="items-center gap-12 xl:gap-16 grid grid-cols-1 lg:grid-cols-2"
+          viewport={inViewOnce}
         >
-          {/* Content Column */}
-          <motion.div variants={itemVariants} className="space-y-6">
-            {/* Section Tag */}
-            <motion.div
-              className="inline-flex items-center space-x-2 bg-gradient-to-r from-smart-green/10 to-smart-cyan/10 mb-6 px-4 py-2 border border-smart-green/20 rounded-full"
-              variants={itemVariants}
-              whileHover={{ scale: 1.05 }}
-              transition={{ type: "spring", stiffness: 400 }}
-            >
-              <motion.div
-                animate={{
-                  rotate: [0, 360],
-                  scale: [1, 1.1, 1]
-                }}
-                transition={{
-                  duration: 3,
-                  repeat: Infinity,
-                  repeatDelay: 2
-                }}
-              >
-                <Bookmark className="w-4 h-4 text-smart-green" />
-              </motion.div>
-              <span className="font-medium text-gray-700 dark:text-gray-300 text-sm">
-                {t('Sobre Nós', 'About Us')}
-              </span>
-            </motion.div>
+          <motion.p variants={fadeUp} className="eyebrow">
+            {t('Sobre', 'About')}
+          </motion.p>
+          <motion.h2 id="about-title" variants={fadeUp} className="mt-5 text-[2.1rem] text-display text-foreground lg:text-[3.5rem] sm:text-5xl">
+            {t('Quem está por trás da ', "Who's behind ")}
+            <span className="gradient-text">Smart Sites Lab</span>
+          </motion.h2>
 
-            <motion.h2
-              variants={itemVariants}
-              className="font-poppins font-bold text-gray-900 dark:text-white text-4xl lg:text-5xl"
-            >
-              {t('Sobre a Smart Sites Lab', 'About Smart Sites Lab')}
-            </motion.h2>
-
-            <motion.div variants={itemVariants} className="flex flex-wrap gap-2 mb-6">
-              {badges.map((badge, index) => {
-                const IconComponent = badge.icon;
-                return (
-                  <Badge
-                    key={index}
-                    variant="secondary"
-                    className="flex items-center gap-2 bg-smart-green/10 dark:bg-smart-green/20 px-3 py-1.5 border-smart-green/20 text-smart-dark dark:text-smart-green"
-                  >
-                    <IconComponent className="w-3.5 h-3.5" />
-                    {t(badge.ptText, badge.enText)}
-                  </Badge>
-                );
-              })}
-            </motion.div>
-
-            <motion.div variants={itemVariants} className="space-y-4">
-              <p className="max-w-prose text-gray-700 dark:text-gray-300 text-lg leading-relaxed">
-                {t(
-                  'Adiel Soares é o idealizador do Smart Sites Lab — uma iniciativa que une estratégia de design, engenharia de software e performance digital. Com anos de experiência como UX/UI Designer Sênior em órgãos públicos e empresas privadas, Adiel construiu uma base sólida em interfaces, acessibilidade e desenvolvimento frontend.',
-                  'Adiel Soares is the founder of Smart Sites Lab — an initiative that merges design strategy, software engineering, and digital performance. With years of experience as a Senior UX/UI Designer in both government and private sectors, Adiel brings deep expertise in user interfaces, accessibility, and frontend development.'
-                )}
-              </p>
-
-              <p className="max-w-prose text-gray-700 dark:text-gray-300 text-lg leading-relaxed">
-                {t(
-                  'Seu propósito é criar soluções digitais que sejam não apenas funcionais, mas verdadeiramente impactantes. Especialista em React, Tailwind CSS e TypeScript, ele lidera projetos focados em acessibilidade, responsividade e sistemas de design escaláveis.',
-                  'His goal is to create digital products that are not only functional but truly meaningful. Specializing in React, Tailwind CSS, and TypeScript, he leads projects focused on accessibility, responsiveness, and scalable design systems.'
-                )}
-              </p>
-            </motion.div>
-
-            <motion.div
-              variants={itemVariants}
-              className="flex items-center gap-4 pt-4"
-            >
-              <div className="bg-gradient-to-r from-smart-green to-smart-cyan w-12 h-0.5"></div>
-              <p className="font-medium text-gray-600 dark:text-gray-400 text-sm uppercase tracking-wider">
-                {t('Liderança em Design & Tecnologia', 'Leadership in Design & Technology')}
-              </p>
-            </motion.div>
+          <motion.div variants={fadeUp} className="space-y-5 mt-8 max-w-2xl text-muted-foreground text-lg leading-relaxed">
+            <p>
+              {t(
+                'A Smart Sites Lab foi criada por Adiel Soares, UX/UI Designer Sênior com experiência em projetos para órgãos públicos e empresas privadas. Essa trajetória trouxe uma base sólida em design de interfaces, acessibilidade e desenvolvimento frontend.',
+                'Smart Sites Lab was founded by Adiel Soares, a Senior UX/UI Designer with experience on projects for government agencies and private companies. That background brings solid expertise in interface design, accessibility and frontend development.'
+              )}
+            </p>
+            <p>
+              {t(
+                'Na prática, o mesmo rigor aplicado a sistemas complexos está em cada site que desenvolvemos: estrutura pensada para quem vai usar, código bem construído e atenção à forma como as pessoas realmente navegam.',
+                'In practice, the same rigor applied to complex systems goes into every website we build: a structure designed for the people using it, well-built code and attention to how people actually browse.'
+              )}
+            </p>
           </motion.div>
 
-          {/* Image Column */}
-          <motion.div
-            variants={imageVariants}
-            className="flex justify-center lg:justify-end"
-          >
-            <div className="relative">
-              <motion.div
-                className="absolute -inset-4 bg-gradient-to-r from-smart-green/20 to-smart-cyan/20 blur-xl rounded-2xl"
-                animate={{
-                  scale: [1, 1.05, 1],
-                  opacity: [0.5, 0.8, 0.5],
-                }}
-                transition={{
-                  duration: 4,
-                  repeat: Infinity,
-                  ease: "easeInOut"
-                }}
-              />
-              <div className="relative mx-auto w-full max-w-sm lg:max-w-md">
-                <img
-                  src={adielSoares}
-                  alt={t('Adiel Soares - Fundador da Smart Sites Lab', 'Adiel Soares - Founder of Smart Sites Lab')}
-                  className="shadow-2xl border-4 border-white dark:border-gray-700 rounded-2xl w-full object-cover aspect-square transition-all duration-300"
-                />
-                <motion.div
-                  className="-right-4 -bottom-4 absolute flex justify-center items-center bg-gradient-to-br from-smart-green to-smart-cyan shadow-lg rounded-full w-20 h-20"
-                  whileHover={{ scale: 1.1, rotate: 10 }}
-                  transition={{ type: "spring", stiffness: 400, damping: 10 }}
-                >
-                  <a href='https://www.linkedin.com/in/adiel-soares-122579145/' target='_blank'><Linkedin className="w-8 h-8 text-black" /></a>
-                </motion.div>
+          <motion.dl variants={fadeUp} className="gap-px grid sm:grid-cols-3 mt-10 bg-border border border-border rounded-2xl overflow-hidden">
+            {facts.map((f) => (
+              <div key={f.term} className="bg-background p-5">
+                <dt className="font-mono text-[0.7rem] text-muted-foreground uppercase tracking-[0.16em]">{f.term}</dt>
+                <dd className="mt-2 font-medium text-foreground text-sm leading-relaxed">{f.value}</dd>
               </div>
-            </div>
+            ))}
+          </motion.dl>
+
+          <motion.div variants={fadeUp} className="mt-10">
+            <a
+              href="https://www.linkedin.com/in/adiel-soares-122579145/"
+              target="_blank"
+              rel="noopener noreferrer"
+              className="group inline-flex items-center gap-2 font-medium text-foreground decoration-2 decoration-border hover:decoration-brand underline underline-offset-[6px] transition-colors"
+            >
+              {t('Ver perfil no LinkedIn', 'View LinkedIn profile')}
+              <ArrowUpRight className="w-4 h-4 transition-transform group-hover:-translate-y-0.5 group-hover:translate-x-0.5 duration-300" aria-hidden="true" />
+              <span className="sr-only">{t('(abre em nova aba)', '(opens in a new tab)')}</span>
+            </a>
           </motion.div>
         </motion.div>
       </div>

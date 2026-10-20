@@ -59,6 +59,12 @@ export default {
 				'smart-green': '#5EF4A1',
 				'smart-cyan': '#30D5C7',
 				'smart-dark': '#2E5C46',
+				brand: 'hsl(var(--brand))',
+				ink: 'hsl(var(--ink))',
+				surface: {
+					DEFAULT: 'hsl(var(--surface))',
+					2: 'hsl(var(--surface-2))'
+				},
 				sidebar: {
 					DEFAULT: 'hsl(var(--sidebar-background))',
 					foreground: 'hsl(var(--sidebar-foreground))',
@@ -71,8 +77,9 @@ export default {
 				}
 			},
 			fontFamily: {
-				'poppins': ['Poppins', 'sans-serif'],
-				'inter': ['Inter', 'sans-serif'],
+				display: ['"Bricolage Grotesque"', 'Inter', 'system-ui', 'sans-serif'],
+				sans: ['Inter', 'system-ui', '-apple-system', 'Segoe UI', 'Roboto', 'sans-serif'],
+				mono: ['"JetBrains Mono"', 'ui-monospace', 'SFMono-Regular', 'Menlo', 'monospace'],
 			},
 			spacing: {
 				'xxs': '4px',
@@ -84,6 +91,9 @@ export default {
 				'xxl': '64px',
 				'xxxl': '80px',
 				'xxxxl': '120px',
+			},
+			transitionTimingFunction: {
+				'out-expo': 'cubic-bezier(0.22, 1, 0.36, 1)'
 			},
 			borderRadius: {
 				lg: 'var(--radius)',

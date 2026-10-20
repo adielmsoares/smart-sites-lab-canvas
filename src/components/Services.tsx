@@ -1,252 +1,147 @@
-
 import React from 'react';
+import { motion } from 'framer-motion';
+import { Building2, MousePointerClick, ShoppingBag, Workflow, PenTool, RefreshCcw } from 'lucide-react';
 import { useLanguage } from '../contexts/LanguageContext';
-import { Monitor, Target, CreditCard, ShoppingCart, Palette, Code } from 'lucide-react';
-import { motion, useInView } from 'framer-motion';
-import { useRef } from 'react';
+import { fadeUp, inViewOnce, stagger } from '@/lib/motion';
+import SectionHeader from './SectionHeader';
+import CtaLink from './CtaLink';
 
 const Services: React.FC = () => {
   const { t } = useLanguage();
-  const ref = useRef(null);
-  const isInView = useInView(ref, { once: true, margin: "-100px" });
 
   const services = [
     {
-      icon: Monitor,
-      title: t('Criação de Websites', 'Website Creation'),
+      icon: Building2,
+      name: t('Sites institucionais', 'Business websites'),
+      headline: t('Sua empresa bem apresentada, de onde o cliente estiver.', 'Your company well presented, wherever your client is.'),
       description: t(
-        'Sites institucionais completos com design moderno, responsivo e otimizado para SEO.',
-        'Complete institutional websites with modern, responsive design optimized for SEO.'
+        'Sites profissionais para apresentar seus serviços, fortalecer a marca e facilitar o contato de novos clientes.',
+        'Professional websites to present your services, strengthen your brand and make it easy for new clients to reach you.'
       ),
-      features: [
-        t('Design Responsivo', 'Responsive Design'),
-        t('SEO Otimizado', 'SEO Optimized'),
-        t('Performance Rápida', 'Fast Performance'),
-      ],
     },
     {
-      icon: Target,
-      title: t('Landing Pages', 'Landing Pages'),
+      icon: MousePointerClick,
+      name: t('Landing pages', 'Landing pages'),
+      headline: t('Uma página pensada para transformar interesse em contato.', 'One page designed to turn interest into contact.'),
       description: t(
-        'Páginas focadas em conversão, ideais para campanhas de marketing e captação de leads.',
-        'Conversion-focused pages, ideal for marketing campaigns and lead generation.'
+        'Páginas estratégicas para campanhas, lançamentos, captação de leads e pedidos de orçamento.',
+        'Focused pages for campaigns, launches, lead capture and quote requests.'
       ),
-      features: [
-        t('Alta Conversão', 'High Conversion'),
-        t('A/B Testing', 'A/B Testing'),
-        t('Analytics Integrado', 'Integrated Analytics'),
-      ],
     },
     {
-      icon: CreditCard,
-      title: t('Sales Pages', 'Sales Pages'),
+      icon: ShoppingBag,
+      name: t('Lojas virtuais', 'Online stores'),
+      headline: t('Seu catálogo disponível para vender online.', 'Your catalog, ready to sell online.'),
       description: t(
-        'Páginas de vendas persuasivas que transformam visitantes em compradores.',
-        'Persuasive sales pages that transform visitors into buyers.'
+        'Experiências de compra organizadas e responsivas, que facilitam a navegação e a descoberta de produtos.',
+        'Organized, responsive shopping experiences that make browsing and finding products easy.'
       ),
-      features: [
-        t('Copy Persuasiva', 'Persuasive Copy'),
-        t('Gatilhos de Vendas', 'Sales Triggers'),
-        t('Checkout Otimizado', 'Optimized Checkout'),
-      ],
     },
     {
-      icon: ShoppingCart,
-      title: t('E-commerce', 'E-commerce'),
+      icon: Workflow,
+      name: t('Sistemas web', 'Web systems'),
+      headline: t('Tecnologia desenvolvida para a rotina do seu negócio.', 'Technology built around how your business runs.'),
       description: t(
-        'Lojas virtuais completas com sistemas de pagamento integrados e gestão de estoque.',
-        'Complete online stores with integrated payment systems and inventory management.'
+        'Aplicações e ferramentas digitais adaptadas às necessidades específicas de operação e gestão.',
+        'Applications and digital tools tailored to your specific operational and management needs.'
       ),
-      features: [
-        t('Pagamentos Seguros', 'Secure Payments'),
-        t('Gestão de Estoque', 'Inventory Management'),
-        t('Painel Administrativo', 'Admin Dashboard'),
-      ],
     },
     {
-      icon: Palette,
-      title: t('UI/UX Design', 'UI/UX Design'),
+      icon: PenTool,
+      name: t('UX/UI Design', 'UX/UI Design'),
+      headline: t('Interfaces que fazem sentido para quem usa.', 'Interfaces that make sense to the people using them.'),
       description: t(
-        'Design de interfaces intuitivas focadas na experiência do usuário.',
-        'Intuitive interface design focused on user experience.'
+        'Arquitetura da informação, prototipação e design de interfaces com foco em clareza e usabilidade.',
+        'Information architecture, prototyping and interface design focused on clarity and usability.'
       ),
-      features: [
-        t('Prototipagem', 'Prototyping'),
-        t('Testes de Usabilidade', 'Usability Testing'),
-        t('Design System', 'Design System'),
-      ],
     },
     {
-      icon: Code,
-      title: t('Estratégia Digital', 'Digital Strategy'),
+      icon: RefreshCcw,
+      name: t('Reformulação de sites', 'Website redesign'),
+      headline: t('Seu site atual já não representa sua empresa?', "Your current site no longer represents your company?"),
       description: t(
-        'Consultoria completa para otimizar sua presença digital e aumentar conversões.',
-        'Complete consulting to optimize your digital presence and increase conversions.'
+        'Modernização visual, navegação mais clara, responsividade e reorganização de conteúdo.',
+        'Visual refresh, clearer navigation, responsiveness and reorganized content.'
       ),
-      features: [
-        t('Análise de Mercado', 'Market Analysis'),
-        t('Consultoria SEO', 'SEO Consulting'),
-        t('Otimização de Conversão', 'Conversion Optimization'),
-      ],
     },
   ];
 
-  const containerVariants = {
-    hidden: { opacity: 0 },
-    visible: {
-      opacity: 1,
-      transition: {
-        delayChildren: 0.3,
-        staggerChildren: 0.1
-      }
-    }
-  };
-
-  const itemVariants = {
-    hidden: { y: 50, opacity: 0 },
-    visible: {
-      y: 0,
-      opacity: 1,
-      transition: {
-        type: "spring" as const,
-        damping: 12,
-        stiffness: 200
-      }
-    }
-  };
-
   return (
-    <section id="services" className="section-padding bg-white dark:bg-gray-900 transition-colors duration-300" ref={ref}>
+    <section id="services" aria-labelledby="services-title" className="relative bg-surface section-padding">
       <div className="container-width">
-        {/* Section Header */}
-        <motion.div 
-          className="text-center mb-16"
-          initial={{ opacity: 0, y: 30 }}
-          animate={isInView ? { opacity: 1, y: 0 } : { opacity: 0, y: 30 }}
-          transition={{ duration: 0.6 }}
-        >
-          <motion.div 
-            className="inline-flex items-center space-x-2 bg-gradient-to-r from-smart-green/10 to-smart-cyan/10 border border-smart-green/20 rounded-full px-4 py-2 mb-6"
-            whileHover={{ scale: 1.05 }}
-            transition={{ type: "spring", stiffness: 400 }}
-          >
-            <span className="text-sm font-medium text-gray-700 dark:text-gray-300">
-              {t('Nossos Serviços', 'Our Services')}
-            </span>
-          </motion.div>
-          <motion.h2 
-            className="text-3xl sm:text-4xl lg:text-5xl font-bold text-gray-900 dark:text-white mb-6"
-            initial={{ opacity: 0, y: 20 }}
-            animate={isInView ? { opacity: 1, y: 0 } : { opacity: 0, y: 20 }}
-            transition={{ duration: 0.6, delay: 0.2 }}
-          >
-            {t('Soluções completas para', 'Complete solutions for')}{' '}
-            <span className="gradient-text">
-              {t('seu negócio digital', 'your digital business')}
-            </span>
-          </motion.h2>
-          <motion.p 
-            className="text-lg text-gray-600 dark:text-gray-300 max-w-2xl mx-auto"
-            initial={{ opacity: 0, y: 20 }}
-            animate={isInView ? { opacity: 1, y: 0 } : { opacity: 0, y: 20 }}
-            transition={{ duration: 0.6, delay: 0.4 }}
+        <div className="lg:items-end gap-10 grid lg:grid-cols-12">
+          <SectionHeader
+            id="services-title"
+            className="lg:col-span-8"
+            eyebrow={t('Serviços', 'Services')}
+            title={
+              <>
+                {t('O que fazemos para a sua empresa ', 'What we do for your company ')}
+                <span className="gradient-text">{t('aparecer bem.', 'to show up well.')}</span>
+              </>
+            }
+          />
+          <motion.p
+            className="lg:col-span-4 text-muted-foreground text-lg leading-relaxed"
+            initial={{ opacity: 0, y: 16 }}
+            whileInView={{ opacity: 1, y: 0 }}
+            viewport={inViewOnce}
+            transition={{ duration: 0.8, delay: 0.2 }}
           >
             {t(
-              'Oferecemos uma gama completa de serviços de desenvolvimento web para impulsionar sua presença online.',
-              'We offer a complete range of web development services to boost your online presence.'
+              'Do primeiro site à reformulação de uma plataforma existente: cada projeto parte do que o seu cliente precisa encontrar.',
+              "From a first website to rebuilding an existing platform: every project starts with what your clients need to find."
             )}
           </motion.p>
-        </motion.div>
+        </div>
 
-        {/* Services Grid */}
-        <motion.div 
-          className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8"
-          variants={containerVariants}
+        <motion.ul
+          className="grid sm:grid-cols-2 lg:grid-cols-3 [&>li]:bg-surface mt-16 bg-border border border-border rounded-3xl overflow-hidden"
+          style={{ gap: 1 }}
+          variants={stagger(0.07)}
           initial="hidden"
-          animate={isInView ? "visible" : "hidden"}
+          whileInView="visible"
+          viewport={{ once: true, amount: 0.1 }}
         >
-          {services.map((service, index) => (
-            <motion.div
-              key={index}
-              className="group bg-white dark:bg-gray-800 border border-gray-200 dark:border-gray-700 rounded-2xl p-8 hover:shadow-xl hover:border-smart-green/30 transition-all duration-300"
-              variants={itemVariants}
-              whileHover={{ 
-                y: -10,
-                scale: 1.02,
-                boxShadow: "0 25px 50px -12px rgba(0, 0, 0, 0.25)"
-              }}
-              transition={{ type: "spring", stiffness: 300 }}
-            >
-              {/* Icon */}
-              <motion.div 
-                className="w-16 h-16 bg-gradient-to-br from-smart-green/10 to-smart-cyan/10 dark:from-smart-green/20 dark:to-smart-cyan/20 rounded-2xl flex items-center justify-center mb-6"
-                whileHover={{ 
-                  scale: 1.2,
-                  rotate: 10,
-                  boxShadow: "0 10px 25px -5px rgba(94, 244, 161, 0.4)"
-                }}
-                transition={{ type: "spring", stiffness: 400 }}
-              >
-                <motion.div
-                  animate={{ 
-                    rotate: [0, 5, -5, 0]
-                  }}
-                  transition={{ 
-                    duration: 3,
-                    repeat: Infinity,
-                    repeatDelay: 2 + index * 0.5
-                  }}
-                >
-                  <service.icon className="w-8 h-8 text-smart-green" />
-                </motion.div>
-              </motion.div>
+          {services.map((service, i) => (
+            <motion.li key={service.name} variants={fadeUp} className="group isolate relative flex flex-col p-8 sm:p-10">
+              <span
+                aria-hidden="true"
+                className="-z-10 absolute inset-0 bg-[radial-gradient(120%_80%_at_0%_0%,hsl(var(--brand-green)/0.10),transparent_60%)] opacity-0 group-hover:opacity-100 transition-opacity duration-500"
+              />
+              <span
+                aria-hidden="true"
+                className="top-0 absolute inset-x-0 bg-gradient-to-r from-smart-green to-smart-cyan h-px scale-x-0 group-hover:scale-x-100 origin-left transition-transform duration-700 ease-out-expo"
+              />
 
-              {/* Content */}
-              <motion.h3 
-                className="text-xl font-bold text-gray-900 dark:text-white mb-4"
-                whileHover={{ scale: 1.05 }}
-              >
-                {service.title}
-              </motion.h3>
-              <motion.p 
-                className="text-gray-600 dark:text-gray-300 mb-6 leading-relaxed"
-                whileHover={{ scale: 1.02 }}
-              >
-                {service.description}
-              </motion.p>
-
-              {/* Features */}
-              <ul className="space-y-2">
-                {service.features.map((feature, featureIndex) => (
-                  <motion.li 
-                    key={featureIndex} 
-                    className="flex items-center text-sm text-gray-600 dark:text-gray-400"
-                    initial={{ opacity: 0, x: -10 }}
-                    animate={isInView ? { opacity: 1, x: 0 } : { opacity: 0, x: -10 }}
-                    transition={{ delay: 0.8 + (index * 0.1) + (featureIndex * 0.1) }}
-                    whileHover={{ x: 5, color: "#5EF4A1" }}
-                  >
-                    <motion.div 
-                      className="w-1.5 h-1.5 bg-smart-green rounded-full mr-3"
-                      whileHover={{ scale: 1.5 }}
-                    />
-                    {feature}
-                  </motion.li>
-                ))}
-              </ul>
-
-              {/* CTA */}
-              <div className="mt-6 pt-6 border-t border-gray-100 dark:border-gray-700">
-                <motion.button 
-                  className="text-smart-green font-semibold text-sm group-hover:text-smart-cyan transition-colors"
-                  whileHover={{ scale: 1.05, x: 5 }}
-                  whileTap={{ scale: 0.95 }}
-                >
-                  {t('Saber mais →', 'Learn more →')}
-                </motion.button>
+              <div className="flex justify-between items-center">
+                <span className="flex justify-center items-center bg-background border border-border rounded-2xl w-12 h-12 text-brand transition-transform group-hover:-translate-y-1 duration-500">
+                  <service.icon className="w-5 h-5" aria-hidden="true" strokeWidth={1.75} />
+                </span>
+                <span className="font-mono text-muted-foreground text-xs">{String(i + 1).padStart(2, '0')}</span>
               </div>
-            </motion.div>
+
+              <h3 className="mt-10 font-semibold text-foreground text-2xl">{service.name}</h3>
+              <p className="mt-3 font-medium text-[1.05rem] text-foreground/85 leading-snug">{service.headline}</p>
+              <p className="mt-4 text-muted-foreground leading-relaxed">{service.description}</p>
+            </motion.li>
           ))}
+        </motion.ul>
+
+        <motion.div
+          className="flex sm:flex-row flex-col justify-between items-start sm:items-center gap-6 bg-background mt-12 p-8 sm:p-10 border border-border rounded-3xl"
+          initial={{ opacity: 0, y: 20 }}
+          whileInView={{ opacity: 1, y: 0 }}
+          viewport={inViewOnce}
+          transition={{ duration: 0.8 }}
+        >
+          <p className="max-w-xl text-foreground text-lg">
+            {t('Não sabe qual formato faz mais sentido para o seu negócio?', 'Not sure which format fits your business best?')}{' '}
+            <span className="text-muted-foreground">{t('A gente ajuda a definir.', "We'll help you decide.")}</span>
+          </p>
+          <CtaLink href="#contact" className="shrink-0">
+            {t('Solicitar um orçamento', 'Request a quote')}
+          </CtaLink>
         </motion.div>
       </div>
     </section>

@@ -1,247 +1,113 @@
-
 import React from 'react';
+import { Instagram, ArrowUp } from 'lucide-react';
 import { useLanguage } from '../contexts/LanguageContext';
-import { Mail, Phone, MapPin, Heart, Facebook, Twitter, Linkedin, Instagram, X, Target } from 'lucide-react';
-import { motion, useInView } from 'framer-motion';
-import { useRef } from 'react';
 import smartsitesLogo from './assets/img/smartsites-logo.png';
 
 const Footer: React.FC = () => {
   const { t } = useLanguage();
-  const ref = useRef(null);
-  const isInView = useInView(ref, { once: true, margin: "-50px" });
 
-  const quickLinks = [
+  const navigation = [
     { label: t('Início', 'Home'), href: '#home' },
     { label: t('Serviços', 'Services'), href: '#services' },
-    { label: t('Portfólio', 'Portfolio'), href: '#portfolio' },
-    { label: t('Contato', 'Contact'), href: '#contact' },
+    { label: t('Soluções', 'Solutions'), href: '#solutions' },
+    { label: t('Entregas', 'Deliverables'), href: '#work' },
+    { label: t('Como trabalhamos', 'How we work'), href: '#process' },
+    { label: t('Sobre', 'About'), href: '#about' },
   ];
 
   const services = [
-    { label: t('Websites', 'Websites'), href: '#services' },
-    { label: t('Landing Pages', 'Landing Pages'), href: '#services' },
-    { label: t('E-commerce', 'E-commerce'), href: '#services' },
-    { label: t('UI/UX Design', 'UI/UX Design'), href: '#services' },
+    t('Sites institucionais', 'Business websites'),
+    t('Landing pages', 'Landing pages'),
+    t('Lojas virtuais', 'Online stores'),
+    t('Sistemas web', 'Web systems'),
+    t('UX/UI Design', 'UX/UI Design'),
+    t('Reformulação de sites', 'Website redesign'),
   ];
 
-  const socialLinks = [
-    { icon: Linkedin, href: '#', label: 'LinkedIn' },
-    { icon: Instagram, href: 'https://www.instagram.com/smartsiteslab/', label: 'Instagram' },
-  ];
-
-  const containerVariants = {
-    hidden: { opacity: 0 },
-    visible: {
-      opacity: 1,
-      transition: {
-        delayChildren: 0.2,
-        staggerChildren: 0.1
-      }
-    }
-  };
-
-  const itemVariants = {
-    hidden: { y: 30, opacity: 0 },
-    visible: {
-      y: 0,
-      opacity: 1,
-      transition: {
-        type: "spring" as const,
-        damping: 12,
-        stiffness: 200
-      }
-    }
-  };
+  const linkClass = 'text-white/60 transition-colors hover:text-white';
 
   return (
-    <footer className="bg-black dark:bg-gray-950 text-white transition-colors duration-300" ref={ref}>
-      <div className="container-width">
-        {/* Main Footer Content */}
-        <motion.div
-          className="py-16"
-          variants={containerVariants}
-          initial="hidden"
-          animate={isInView ? "visible" : "hidden"}
-        >
-          <div className="gap-8 grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4">
-            {/* Company Info */}
-            <motion.div className="lg:col-span-2" variants={itemVariants}>
-              <motion.div
-                className="flex items-center space-x-3 mb-6"
-                whileHover={{ scale: 1.02 }}
-                transition={{ type: "spring", stiffness: 400 }}
-              >
-                <motion.img
-                  src={smartsitesLogo}
-                  alt="Smart Sites Lab Logo"
-                  className="w-10 h-10"
-                  whileHover={{ rotate: 10 }}
-                  transition={{ type: "spring", stiffness: 300 }}
-                />
-                <div className="flex items-center space-x-2">
-                  <span className="font-bold text-white text-xl">Smart Sites</span>
-                  <span className="font-light text-gray-400 text-xl">Lab</span>
-                </div>
-              </motion.div>
-              <motion.p
-                className="mb-6 max-w-md text-gray-400"
-                whileHover={{ scale: 1.02 }}
-              >
-                {t(
-                  'Criamos soluções web modernas e eficientes que transformam ideias em resultados concretos para seu negócio.',
-                  'We create modern and efficient web solutions that transform ideas into concrete results for your business.'
-                )}
-              </motion.p>
-
-              {/* Contact Info */}
-              <div className="space-y-3">
-                {[
-                  { icon: Mail, text: 'smartsiteslab@gmail.com' },
-                  { icon: Phone, text: '+55 (61) 99112-7447' },
-                  { icon: MapPin, text: 'Atendimento Remoto | Brasília - DF | Goiânia - GO ' }
-                ].map((contact, index) => (
-                  <motion.div
-                    key={index}
-                    className="flex items-center space-x-3 text-gray-400"
-                    whileHover={{
-                      x: 5,
-                      color: "#5EF4A1",
-                      transition: { duration: 0.2 }
-                    }}
-                  >
-                    <motion.div
-                      whileHover={{ scale: 1.2, rotate: 5 }}
-                      transition={{ type: "spring", stiffness: 400 }}
-                    >
-                      <contact.icon className="w-5 h-5 text-smart-green" />
-                    </motion.div>
-                    <span>{contact.text}</span>
-                  </motion.div>
-                ))}
-              </div>
-            </motion.div>
-
-            {/* Quick Links */}
-            <motion.div variants={itemVariants}>
-              <h3 className="mb-6 font-semibold text-white text-lg">
-                {t('Links Rápidos', 'Quick Links')}
-              </h3>
-              <ul className="space-y-3">
-                {quickLinks.map((link, index) => (
-                  <motion.li
-                    key={index}
-                    whileHover={{ x: 5 }}
-                    transition={{ type: "spring", stiffness: 400 }}
-                  >
-                    <motion.a
-                      href={link.href}
-                      className="text-gray-400 hover:text-smart-green transition-colors duration-200"
-                      whileHover={{ scale: 1.05 }}
-                    >
-                      {link.label}
-                    </motion.a>
-                  </motion.li>
-                ))}
-              </ul>
-            </motion.div>
-
-            {/* Services */}
-            <motion.div variants={itemVariants}>
-              <h3 className="mb-6 font-semibold text-white text-lg">
-                {t('Serviços', 'Services')}
-              </h3>
-              <ul className="space-y-3">
-                {services.map((service, index) => (
-                  <motion.li
-                    key={index}
-                    whileHover={{ x: 5 }}
-                    transition={{ type: "spring", stiffness: 400 }}
-                  >
-                    <motion.a
-                      href={service.href}
-                      className="text-gray-400 hover:text-smart-green transition-colors duration-200"
-                      whileHover={{ scale: 1.05 }}
-                    >
-                      {service.label}
-                    </motion.a>
-                  </motion.li>
-                ))}
-              </ul>
-            </motion.div>
-          </div>
-        </motion.div>
-
-        {/* Bottom Footer */}
-        <motion.div
-          className="py-8 border-gray-800 border-t"
-          initial={{ opacity: 0, y: 20 }}
-          animate={isInView ? { opacity: 1, y: 0 } : { opacity: 0, y: 20 }}
-          transition={{ duration: 0.6, delay: 0.8 }}
-        >
-          <div className="flex md:flex-row flex-col justify-between items-center space-y-4 md:space-y-0">
-            {/* Copyright */}
-            <motion.div
-              className="text-gray-400 text-sm md:text-left text-center"
-              whileHover={{ scale: 1.02 }}
-            >
-              <p>
-                © {new Date().getFullYear()} - Smart Sites Lab. {t('Todos os direitos reservados.', 'All rights reserved.')}
-              </p>
-            </motion.div>
-
-            {/* Social Links */}
-            <div className="flex items-center space-x-4">
-              {socialLinks.map((social, index) => (
-                <motion.a
-                  key={index}
-                  href={social.href}
-                  target="_blank"
-                  rel="noopener noreferrer"
-                  className="flex justify-center items-center bg-gray-800 hover:bg-smart-green rounded-full w-10 h-10 text-gray-400 hover:text-black transition-all duration-200"
-                  aria-label={social.label}
-                  whileHover={{
-                    scale: 1.2,
-                    rotate: 10,
-                    y: -3
-                  }}
-                  whileTap={{ scale: 0.9 }}
-                  transition={{ type: "spring", stiffness: 400 }}
-                >
-                  <social.icon className="w-5 h-5" />
-                </motion.a>
-              ))}
-            </div>
-
-            {/* Legal Links */}
-            <div className="flex items-center space-x-6 text-gray-400 text-sm">
-              {[
-                { label: t('Desenvolvido com', 'Developed with'), href: '#' },
-                { render: () => <Heart className="w-6 h-6 text-red-500 animate-pulse" /> },
-                { label: t('Smart Sites Lab', 'Smart Sites Lab'), href: '#' }
-              ].map((legal, index) =>
-                'href' in legal && 'label' in legal ? (
-                  <motion.a
-                    key={index}
-                    href={legal.href}
-                    className="hover:text-smart-green transition-colors"
-                    whileHover={{
-                      scale: 1.05,
-                      y: -2
-                    }}
-                    transition={{ type: "spring", stiffness: 400 }}
-                  >
-                    {legal.label}
-                  </motion.a>
-                ) : (
-                  <span key={index}>
-                    {'render' in legal && typeof legal.render === 'function' ? legal.render() : null}
-                  </span>
-                )
+    <footer className="relative bg-ink border-white/10 border-t text-white">
+      <div className="py-16 lg:py-20 container-width">
+        <div className="gap-12 grid lg:grid-cols-12">
+          <div className="lg:col-span-5">
+            <a href="#home" className="inline-flex items-center gap-3 rounded-lg" aria-label="Smart Sites Lab — início">
+              <img src={smartsitesLogo} alt="" width={40} height={40} loading="lazy" className="w-10 h-10" />
+              <span className="font-display text-xl leading-none tracking-tight">
+                <span className="font-semibold">Smart Sites</span> <span className="text-white/60">Lab</span>
+              </span>
+            </a>
+            <p className="mt-6 max-w-sm text-white/60 leading-relaxed">
+              {t(
+                'Criação de sites profissionais, landing pages, lojas virtuais e sistemas web para empresas que querem ser bem apresentadas na internet.',
+                'Professional websites, landing pages, online stores and web systems for companies that want to be well presented online.'
               )}
-            </div>
+            </p>
+            <a href="#contact" className="mt-8 btn btn-primary">
+              {t('Falar com a Smart Sites Lab', 'Talk to Smart Sites Lab')}
+            </a>
           </div>
-        </motion.div>
+
+          <nav aria-label={t('Rodapé', 'Footer')} className="lg:col-span-2">
+            <h2 className="font-mono text-[0.7rem] text-white/50 uppercase tracking-[0.16em]">{t('Navegação', 'Navigation')}</h2>
+            <ul className="space-y-3 mt-5">
+              {navigation.map((l) => (
+                <li key={l.href}>
+                  <a href={l.href} className={linkClass}>
+                    {l.label}
+                  </a>
+                </li>
+              ))}
+            </ul>
+          </nav>
+
+          <div className="lg:col-span-2">
+            <h2 className="font-mono text-[0.7rem] text-white/50 uppercase tracking-[0.16em]">{t('Serviços', 'Services')}</h2>
+            <ul className="space-y-3 mt-5 text-white/60">
+              {services.map((s) => (
+                <li key={s}>{s}</li>
+              ))}
+            </ul>
+          </div>
+
+          <div className="lg:col-span-3">
+            <h2 className="font-mono text-[0.7rem] text-white/50 uppercase tracking-[0.16em]">{t('Contato', 'Contact')}</h2>
+            <ul className="space-y-3 mt-5">
+              <li>
+                <a href="mailto:smartsiteslab@gmail.com" className={linkClass}>
+                  smartsiteslab@gmail.com
+                </a>
+              </li>
+              <li>
+                <a href="tel:+5561991127447" className={linkClass}>
+                  +55 (61) 99112-7447
+                </a>
+              </li>
+              <li className="text-white/60">{t('Atendimento remoto', 'Remote service')}</li>
+              <li className="text-white/60">Brasília - DF · Goiânia - GO</li>
+            </ul>
+            <a
+              href="https://www.instagram.com/smartsiteslab/"
+              target="_blank"
+              rel="noopener noreferrer"
+              className="inline-flex items-center gap-2 mt-6 px-4 border border-white/15 hover:border-white/40 rounded-full h-11 text-white/80 hover:text-white text-sm transition-colors"
+            >
+              <Instagram className="w-4 h-4" aria-hidden="true" />
+              @smartsiteslab
+              <span className="sr-only">{t('no Instagram (abre em nova aba)', 'on Instagram (opens in a new tab)')}</span>
+            </a>
+          </div>
+        </div>
+
+        <div className="flex sm:flex-row flex-col-reverse justify-between items-start sm:items-center gap-6 mt-16 pt-8 border-white/10 border-t text-white/50 text-sm">
+          <p>
+            © {new Date().getFullYear()} Smart Sites Lab. {t('Todos os direitos reservados.', 'All rights reserved.')}
+          </p>
+          <a href="#home" className="group inline-flex items-center gap-2 hover:text-white transition-colors">
+            {t('Voltar ao topo', 'Back to top')}
+            <ArrowUp className="w-4 h-4 transition-transform group-hover:-translate-y-0.5 duration-300" aria-hidden="true" />
+          </a>
+        </div>
       </div>
     </footer>
   );

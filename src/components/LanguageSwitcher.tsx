@@ -1,36 +1,34 @@
 
 import React from 'react';
-import { useLanguage } from '../contexts/LanguageContext';
-import { Globe } from 'lucide-react';
+import { useLanguage, type Language } from '../contexts/LanguageContext';
+import { cn } from '@/lib/utils';
+
+const options: { value: Language; label: string; name: string }[] = [
+  { value: 'pt', label: 'PT', name: 'Português' },
+  { value: 'en', label: 'EN', name: 'English' },
+];
 
 const LanguageSwitcher: React.FC = () => {
-  const { language, setLanguage } = useLanguage();
+  const { language, setLanguage, t } = useLanguage();
 
   return (
-    <div className="flex items-center space-x-2">
-      <Globe className="w-4 h-4 text-muted-foreground" />
-      <div className="flex bg-muted rounded-lg p-1">
+    <div role="group" aria-label={t('Idioma', 'Language')} className="flex p-1 border border-border/70 rounded-full w-fit">
+      {options.map((opt) => (
         <button
-          onClick={() => setLanguage('pt')}
-          className={`px-3 py-1 text-sm font-medium rounded-md transition-all duration-200 ${
-            language === 'pt'
-              ? 'bg-background text-smart-green shadow-sm'
-              : 'text-muted-foreground hover:text-foreground'
-          }`}
+          key={opt.value}
+          type="button"
+          onClick={() => setLanguage(opt.value)}
+          aria-pressed={language === opt.value}
+          aria-label={opt.name}
+          lang={opt.value === 'pt' ? 'pt-BR' : 'en'}
+          className={cn(
+            'px-3 py-1.5 rounded-full min-w-[2.5rem] font-mono font-medium text-xs transition-colors duration-200',
+            language === opt.value ? 'bg-foreground text-background' : 'text-muted-foreground hover:text-foreground'
+          )}
         >
-          PT
+          {opt.label}
         </button>
-        <button
-          onClick={() => setLanguage('en')}
-          className={`px-3 py-1 text-sm font-medium rounded-md transition-all duration-200 ${
-            language === 'en'
-              ? 'bg-background text-smart-green shadow-sm'
-              : 'text-muted-foreground hover:text-foreground'
-          }`}
-        >
-          EN
-        </button>
-      </div>
+      ))}
     </div>
   );
 };

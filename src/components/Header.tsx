@@ -1,215 +1,195 @@
-import React, { useState, useEffect } from 'react';
+import React, { useEffect, useRef, useState } from 'react';
+import { AnimatePresence, motion } from 'framer-motion';
+import { Menu, X } from 'lucide-react';
 import { useLanguage } from '../contexts/LanguageContext';
+import { useActiveSection } from '@/hooks/use-active-section';
+import { cn } from '@/lib/utils';
+import { easeOut } from '@/lib/motion';
 import LanguageSwitcher from './LanguageSwitcher';
 import ThemeToggle from './ThemeToggle';
-import { Menu, X } from 'lucide-react';
-import { motion, AnimatePresence } from 'framer-motion';
 import smartsitesLogo from './assets/img/smartsites-logo.png';
+
+const SECTION_IDS = ['home', 'services', 'solutions', 'why', 'work', 'differentials', 'process', 'about', 'contact'];
+const NAV_ALIAS: Record<string, string> = { why: 'solutions', differentials: 'about', process: 'about' };
 
 const Header: React.FC = () => {
   const { t } = useLanguage();
   const [isScrolled, setIsScrolled] = useState(false);
-  const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
-  // Exemplo: const { theme } = useTheme(); // Obtenha o tema atual
-  // Para este exemplo, vamos simular o tema baseado na classe 'dark' no body ou html
-  const [isDarkMode, setIsDarkMode] = useState(false);
-
-  useEffect(() => {
-    const handleScroll = () => {
-      setIsScrolled(window.scrollY > 10);
-    };
-
-    const handleThemeChange = () => {
-      // Verifica se a classe 'dark' está presente no elemento <html>
-      setIsDarkMode(document.documentElement.classList.contains('dark'));
-    };
-
-    // Adiciona event listeners
-    window.addEventListener('scroll', handleScroll);
-    // Adiciona listener para mudanças no DOM que possam indicar mudança de tema
-    // Isso é uma simplificação, o ideal seria ter um contexto de tema
-    const observer = new MutationObserver(handleThemeChange);
-    observer.observe(document.documentElement, { attributes: true, attributeFilter: ['class'] });
-
-    // Roda a verificação inicial do tema
-    handleThemeChange();
-
-    return () => {
-      window.removeEventListener('scroll', handleScroll);
-      observer.disconnect();
-    };
-  }, []);
+  const [isMenuOpen, setIsMenuOpen] = useState(false);
+  const menuButtonRef = useRef<HTMLButtonElement>(null);
+  const visible = useActiveSection(SECTION_IDS);
+  const active = NAV_ALIAS[visible] ?? visible;
 
   const navItems = [
-    { label: t('Início', 'Home'), href: '#home' },
-    { label: t('Serviços', 'Services'), href: '#services' },
-    { label: t('Portfólio', 'Portfolio'), href: '#portfolio' },
-    { label: t('Sobre', 'About'), href: '#about' },
-    { label: t('Contato', 'Contact'), href: '#contact' },
+    { id: 'home', label: t('Início', 'Home') },
+    { id: 'services', label: t('Serviços', 'Services') },
+    { id: 'solutions', label: t('Soluções', 'Solutions') },
+    { id: 'work', label: t('Entregas', 'Deliverables') },
+    { id: 'about', label: t('Sobre', 'About') },
+    { id: 'contact', label: t('Contato', 'Contact') },
   ];
 
-  const headerVariants = {
-    transparent: {
-      backgroundColor: isDarkMode ? 'rgba(17, 24, 39, 0)' : 'rgba(255, 255, 255, 0)', // Ajuste para dark mode
-      backdropFilter: 'blur(0px)',
-      boxShadow: '0 0 0 0 rgba(0, 0, 0, 0)',
-    },
-    solid: {
-      backgroundColor: isDarkMode ? 'rgba(17, 24, 39, 0.95)' : 'rgba(255, 255, 255, 0.95)', // Ajuste para dark mode
-      backdropFilter: 'blur(12px)',
-      boxShadow: isDarkMode ? '0 10px 25px -5px rgba(0, 0, 0, 0.5)' : '0 10px 25px -5px rgba(0, 0, 0, 0.1)', // Sombra mais escura para dark mode
-    }
-  };
+  useEffect(() => {
+    const onScroll = () => setIsScrolled(window.scrollY > 24);
+    onScroll();
+    window.addEventListener('scroll', onScroll, { passive: true });
+    return () => window.removeEventListener('scroll', onScroll);
+  }, []);
+
+  useEffect(() => {
+    if (!isMenuOpen) return;
+    const onKey = (e: KeyboardEvent) => {
+      if (e.key === 'Escape') {
+        setIsMenuOpen(false);
+        menuButtonRef.current?.focus();
+      }
+    };
+    const onResize = () => window.innerWidth >= 1024 && setIsMenuOpen(false);
+    document.body.style.overflow = 'hidden';
+    window.addEventListener('keydown', onKey);
+    window.addEventListener('resize', onResize);
+    return () => {
+      document.body.style.overflow = '';
+      window.removeEventListener('keydown', onKey);
+      window.removeEventListener('resize', onResize);
+    };
+  }, [isMenuOpen]);
+
+  const solid = isScrolled || isMenuOpen;
 
   return (
-    <motion.header
-      className="top-0 right-0 left-0 z-50 fixed transition-all duration-300" // Remova dark:bg-gray-900/95 daqui
-      variants={headerVariants}
-      animate={isScrolled ? 'solid' : 'transparent'}
-      transition={{ duration: 0.3 }}
-    >
-      <div className="container-width">
-        <div className="flex justify-between items-center h-16 sm:h-20">
-          {/* Logo */}
-          <a href="#home">
-            <motion.div
-              className="flex items-center space-x-3"
-              whileHover={{ scale: 1.02 }}
-              transition={{ type: "spring", stiffness: 400 }}
-            >
-              <motion.img
-                src={smartsitesLogo}
-                alt="Smart Sites Lab Logo"
-                className="w-8 sm:w-10 h-8 sm:h-10"
-                whileHover={{ rotate: 5 }}
-                transition={{ type: "spring", stiffness: 300 }}
-              />
-              <div className="flex items-center space-x-2">
-                <span className="font-bold text-black dark:text-white text-lg sm:text-xl">Smart Sites</span>
-                <span className="font-light text-gray-600 dark:text-gray-400 text-lg sm:text-xl">Lab</span>
-              </div>
-            </motion.div>
+    <>
+      <a
+        href="#main"
+        className="sr-only focus:not-sr-only focus:top-4 focus:left-4 focus:z-[60] focus:fixed focus:bg-foreground focus:px-5 focus:py-3 focus:rounded-full focus:text-background"
+      >
+        {t('Pular para o conteúdo', 'Skip to content')}
+      </a>
+
+      <header
+        className={cn(
+          'top-0 z-50 fixed inset-x-0 transition-[background-color,border-color,backdrop-filter] duration-500',
+          solid
+            ? 'border-b border-border/70 bg-background/80 backdrop-blur-xl backdrop-saturate-150'
+            : 'border-b border-transparent bg-transparent'
+        )}
+      >
+        <div
+          className={cn(
+            'flex justify-between items-center gap-6 transition-[height] duration-500 container-width',
+            isScrolled ? 'h-16' : 'h-[4.5rem] lg:h-20'
+          )}
+        >
+          <a href="#home" className="group flex items-center gap-3 rounded-lg shrink-0" aria-label="Smart Sites Lab — início">
+            <img
+              src={smartsitesLogo}
+              alt=""
+              width={36}
+              height={36}
+              className="w-9 h-9 group-hover:rotate-[-6deg] transition-transform duration-500"
+            />
+            <span className="font-display text-foreground text-lg leading-none tracking-tight">
+              <span className="font-semibold">Smart Sites</span> <span className="font-normal text-muted-foreground">Lab</span>
+            </span>
           </a>
 
-          {/* Desktop Navigation */}
-          <nav className="hidden lg:flex items-center space-x-8">
-            {navItems.map((item, index) => (
-              <motion.a
-                key={item.href}
-                href={item.href}
-                className="relative font-medium text-gray-700 dark:text-gray-300 hover:text-smart-green dark:hover:text-smart-green transition-colors duration-200"
-                whileHover={{ y: -2 }}
-                initial={{ opacity: 0, y: 20 }}
-                animate={{ opacity: 1, y: 0 }}
-                transition={{ delay: index * 0.1 }}
-              >
-                {item.label}
-                <motion.div
-                  className="right-0 -bottom-1 left-0 absolute bg-smart-green h-0.5"
-                  initial={{ scaleX: 0 }}
-                  whileHover={{ scaleX: 1 }}
-                  transition={{ duration: 0.2 }}
-                />
-              </motion.a>
-            ))}
+          <nav aria-label={t('Navegação principal', 'Main navigation')} className="hidden lg:block">
+            <ul className="flex items-center gap-1 bg-surface/60 p-1 border border-border/60 rounded-full">
+              {navItems.map((item) => {
+                const isActive = active === item.id;
+                return (
+                  <li key={item.id} className="relative">
+                    {isActive && (
+                      <motion.span
+                        layoutId="nav-active"
+                        className="absolute inset-0 bg-foreground/[0.07] rounded-full ring-1 ring-foreground/10"
+                        transition={{ type: 'spring', stiffness: 420, damping: 36 }}
+                      />
+                    )}
+                    <a
+                      href={`#${item.id}`}
+                      aria-current={isActive ? 'true' : undefined}
+                      className={cn(
+                        'block relative px-4 py-2 rounded-full font-medium text-sm transition-colors duration-200',
+                        isActive ? 'text-foreground' : 'text-muted-foreground hover:text-foreground'
+                      )}
+                    >
+                      {item.label}
+                    </a>
+                  </li>
+                );
+              })}
+            </ul>
           </nav>
 
-          {/* Language Switcher, Theme Toggle & CTA */}
-          <div className="hidden lg:flex items-center space-x-4">
+          <div className="hidden lg:flex items-center gap-3">
             <LanguageSwitcher />
             <ThemeToggle />
-            <motion.button
-              className="btn-primary"
-              whileHover={{ scale: 1.05, y: -2 }}
-              whileTap={{ scale: 0.95 }}
-              transition={{ type: "spring", stiffness: 400 }}
-            >
-              {t('Começar Projeto', 'Start Project')}
-            </motion.button>
+            <a href="#contact" className="px-5 min-h-[2.75rem] text-sm btn btn-primary">
+              {t('Solicitar orçamento', 'Get a quote')}
+            </a>
           </div>
 
-          {/* Mobile Menu Button */}
-          <div className="lg:hidden flex items-center space-x-4">
-            <LanguageSwitcher />
+          <div className="lg:hidden flex items-center gap-2">
             <ThemeToggle />
-            <motion.button
-              onClick={() => setIsMobileMenuOpen(!isMobileMenuOpen)}
-              className="p-2 text-gray-700 dark:text-gray-300"
-              whileHover={{ scale: 1.1 }}
-              whileTap={{ scale: 0.9 }}
+            <button
+              ref={menuButtonRef}
+              type="button"
+              onClick={() => setIsMenuOpen((v) => !v)}
+              aria-expanded={isMenuOpen}
+              aria-controls="mobile-menu"
+              aria-label={isMenuOpen ? t('Fechar menu', 'Close menu') : t('Abrir menu', 'Open menu')}
+              className="flex justify-center items-center hover:bg-foreground/5 border border-border rounded-full w-11 h-11 text-foreground transition-colors"
             >
-              <AnimatePresence mode="wait">
-                {isMobileMenuOpen ? (
-                  <motion.div
-                    key="close"
-                    initial={{ rotate: -90, opacity: 0 }}
-                    animate={{ rotate: 0, opacity: 1 }}
-                    exit={{ rotate: 90, opacity: 0 }}
-                    transition={{ duration: 0.2 }}
-                  >
-                    <X className="w-6 h-6" />
-                  </motion.div>
-                ) : (
-                  <motion.div
-                    key="menu"
-                    initial={{ rotate: 90, opacity: 0 }}
-                    animate={{ rotate: 0, opacity: 1 }}
-                    exit={{ rotate: -90, opacity: 0 }}
-                    transition={{ duration: 0.2 }}
-                  >
-                    <Menu className="w-6 h-6" />
-                  </motion.div>
-                )}
-              </AnimatePresence>
-            </motion.button>
+              {isMenuOpen ? <X className="w-5 h-5" aria-hidden="true" /> : <Menu className="w-5 h-5" aria-hidden="true" />}
+            </button>
           </div>
         </div>
 
-        {/* Mobile Menu */}
         <AnimatePresence>
-          {isMobileMenuOpen && (
+          {isMenuOpen && (
             <motion.div
-              className="lg:hidden bg-white dark:bg-gray-900 border-gray-200 dark:border-gray-700 border-t"
-              initial={{ height: 0, opacity: 0 }}
-              animate={{ height: 'auto', opacity: 1 }}
-              exit={{ height: 0, opacity: 0 }}
-              transition={{ duration: 0.3 }}
+              id="mobile-menu"
+              className="lg:hidden bg-background border-border/70 border-t h-[calc(100dvh-4rem)] overflow-y-auto"
+              initial={{ opacity: 0 }}
+              animate={{ opacity: 1 }}
+              exit={{ opacity: 0 }}
+              transition={{ duration: 0.25 }}
             >
-              <nav className="flex flex-col space-y-4 py-4">
-                {navItems.map((item, index) => (
-                  <motion.a
-                    key={item.href}
-                    href={item.href}
-                    className="px-4 font-medium text-gray-700 dark:text-gray-300 hover:text-smart-green dark:hover:text-smart-green transition-colors duration-200"
-                    onClick={() => setIsMobileMenuOpen(false)}
-                    initial={{ x: -20, opacity: 0 }}
-                    animate={{ x: 0, opacity: 1 }}
-                    transition={{ delay: index * 0.1 }}
-                    whileHover={{ x: 10 }}
-                  >
-                    {item.label}
-                  </motion.a>
-                ))}
-                <motion.div
-                  className="px-4 pt-4"
-                  initial={{ x: -20, opacity: 0 }}
-                  animate={{ x: 0, opacity: 1 }}
-                  transition={{ delay: navItems.length * 0.1 }}
-                >
-                  <motion.button
-                    className="w-full btn-primary"
-                    whileHover={{ scale: 1.02 }}
-                    whileTap={{ scale: 0.98 }}
-                  >
-                    {t('Começar Projeto', 'Start Project')}
-                  </motion.button>
-                </motion.div>
+              <nav aria-label={t('Navegação principal', 'Main navigation')} className="flex flex-col py-8 h-full container-width">
+                <ul className="flex flex-col">
+                  {navItems.map((item, i) => (
+                    <motion.li
+                      key={item.id}
+                      initial={{ opacity: 0, y: 12 }}
+                      animate={{ opacity: 1, y: 0 }}
+                      transition={{ delay: 0.04 * i, duration: 0.5, ease: easeOut }}
+                      className="border-border/60 border-b"
+                    >
+                      <a
+                        href={`#${item.id}`}
+                        onClick={() => setIsMenuOpen(false)}
+                        aria-current={active === item.id ? 'true' : undefined}
+                        className="flex justify-between items-center py-4 font-display font-medium text-foreground text-2xl"
+                      >
+                        {item.label}
+                        <span aria-hidden="true" className="font-mono text-muted-foreground text-xs">0{i + 1}</span>
+                      </a>
+                    </motion.li>
+                  ))}
+                </ul>
+                <div className="flex flex-col gap-6 mt-auto pt-10">
+                  <LanguageSwitcher />
+                  <a href="#contact" onClick={() => setIsMenuOpen(false)} className="w-full btn btn-primary">
+                    {t('Solicitar orçamento', 'Get a quote')}
+                  </a>
+                </div>
               </nav>
             </motion.div>
           )}
         </AnimatePresence>
-      </div>
-    </motion.header>
+      </header>
+    </>
   );
 };
 
