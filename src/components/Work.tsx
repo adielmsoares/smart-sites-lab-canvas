@@ -256,8 +256,8 @@ const Work: React.FC = () => {
           whileInView="visible"
           viewport={{ once: true, amount: 0.1 }}
         >
-          {items.map(({ Illo, span, ratio, title, text }) => (
-            <motion.li key={title} variants={fadeUp} className={cn('group flex flex-col', span, span === 'lg:col-span-6' && 'sm:col-span-2')}>
+          {items.map(({ Illo, span, ratio, title, text }, i) => (
+            <motion.li key={i} variants={fadeUp} className={cn('group flex flex-col', span, span === 'lg:col-span-6' && 'sm:col-span-2')}>
               <div
                 aria-hidden="true"
                 className={cn(

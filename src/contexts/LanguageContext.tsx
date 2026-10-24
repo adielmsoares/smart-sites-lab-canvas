@@ -1,5 +1,5 @@
 
-import React, { createContext, useContext, useEffect, useState, ReactNode } from 'react';
+import React, { createContext, useCallback, useContext, useEffect, useMemo, useState, ReactNode } from 'react';
 
 export type Language = 'pt' | 'en';
 
@@ -30,12 +30,15 @@ export const LanguageProvider: React.FC<LanguageProviderProps> = ({ children }) 
     document.documentElement.lang = language === 'pt' ? 'pt-BR' : 'en';
   }, [language]);
 
-  const t = (ptText: string, enText: string): string => {
-    return language === 'pt' ? ptText : enText;
-  };
+  const t = useCallback(
+    (ptText: string, enText: string): string => (language === 'pt' ? ptText : enText),
+    [language]
+  );
+
+  const value = useMemo(() => ({ language, setLanguage, t }), [language, t]);
 
   return (
-    <LanguageContext.Provider value={{ language, setLanguage, t }}>
+    <LanguageContext.Provider value={value}>
       {children}
     </LanguageContext.Provider>
   );

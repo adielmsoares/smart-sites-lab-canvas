@@ -76,7 +76,7 @@ const Differentials: React.FC = () => {
         <ol className="lg:col-span-7">
           {items.map((item, i) => (
             <motion.li
-              key={item.title}
+              key={i}
               className="group relative gap-x-6 gap-y-2 sm:gap-x-10 grid grid-cols-[auto_1fr] py-9"
               initial="hidden"
               whileInView="visible"

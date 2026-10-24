@@ -156,7 +156,7 @@ const WhyWebsite: React.FC = () => {
           viewport={{ once: true, amount: 0.2 }}
         >
           {reasons.map((r, i) => (
-            <motion.li key={r.title} variants={fadeUp} className="relative pt-6">
+            <motion.li key={i} variants={fadeUp} className="relative pt-6">
               <motion.span
                 aria-hidden="true"
                 className="top-0 absolute inset-x-0 bg-foreground/20 h-px origin-left"

@@ -182,10 +182,13 @@ export default async function handler(req: Request, context?: { ip?: string }): 
     return json(405, { ok: false, error: 'Method not allowed' }, { Allow: 'POST' });
   }
 
-  const { GMAIL_USER, GMAIL_APP_PASSWORD } = process.env;
+  const { GMAIL_USER, GMAIL_APP_PASSWORD, SMTP_HOST, SMTP_PORT, SMTP_USER, SMTP_PASS, MAIL_FROM } = process.env;
   const inbox = process.env.CONTACT_INBOX || BRAND.inbox;
-  if (!GMAIL_USER || !GMAIL_APP_PASSWORD) {
-    console.error('[contact] Missing GMAIL_USER or GMAIL_APP_PASSWORD env vars');
+  const useSmtp = Boolean(SMTP_HOST && SMTP_USER && SMTP_PASS);
+  const useGmail = Boolean(GMAIL_USER && GMAIL_APP_PASSWORD);
+  const sender = MAIL_FROM || GMAIL_USER || BRAND.inbox;
+  if (!useSmtp && !useGmail) {
+    console.error('[contact] Missing SMTP_* or GMAIL_* env vars');
     return json(500, { ok: false, error: 'Email service not configured' });
   }
 
@@ -215,17 +218,25 @@ export default async function handler(req: Request, context?: { ip?: string }): 
     return json(200, { ok: true });
   }
 
-  const transporter = nodemailer.createTransport({
-    service: 'gmail',
-    auth: { user: GMAIL_USER, pass: GMAIL_APP_PASSWORD },
-  });
+  const port = Number(SMTP_PORT) || 587;
+  const transporter = useSmtp
+    ? nodemailer.createTransport({
+        host: SMTP_HOST,
+        port,
+        secure: port === 465,
+        auth: { user: SMTP_USER, pass: SMTP_PASS },
+      })
+    : nodemailer.createTransport({
+        service: 'gmail',
+        auth: { user: GMAIL_USER, pass: GMAIL_APP_PASSWORD },
+      });
 
   const receivedAt = new Date().toLocaleString('pt-BR', { timeZone: 'America/Sao_Paulo' });
   const safeName = data.name.replace(/[\r\n"]/g, ' ');
 
   try {
     await transporter.sendMail({
-      from: `"Site Smart Sites Lab" <${GMAIL_USER}>`,
+      from: `"Site Smart Sites Lab" <${sender}>`,
       to: inbox,
       replyTo: { name: safeName, address: data.email },
       subject: `Novo contato pelo site: ${safeName}`,
@@ -240,7 +251,7 @@ export default async function handler(req: Request, context?: { ip?: string }): 
   try {
     const isEn = data.language === 'en';
     await transporter.sendMail({
-      from: `"Smart Sites Lab" <${GMAIL_USER}>`,
+      from: `"Smart Sites Lab" <${sender}>`,
       to: { name: safeName, address: data.email },
       replyTo: inbox,
       subject: isEn ? 'We received your message - Smart Sites Lab' : 'Recebemos sua mensagem - Smart Sites Lab',

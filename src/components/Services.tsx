@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useMemo } from 'react';
 import { motion } from 'framer-motion';
 import { Building2, MousePointerClick, ShoppingBag, Workflow, PenTool, RefreshCcw } from 'lucide-react';
 import { useLanguage } from '../contexts/LanguageContext';
@@ -9,8 +9,9 @@ import CtaLink from './CtaLink';
 const Services: React.FC = () => {
   const { t } = useLanguage();
 
-  const services = [
+  const services = useMemo(() => [
     {
+      id: 'institutional',
       icon: Building2,
       name: t('Sites institucionais', 'Business websites'),
       headline: t('Sua empresa bem apresentada, de onde o cliente estiver.', 'Your company well presented, wherever your client is.'),
@@ -20,6 +21,7 @@ const Services: React.FC = () => {
       ),
     },
     {
+      id: 'landing',
       icon: MousePointerClick,
       name: t('Landing pages', 'Landing pages'),
       headline: t('Uma página pensada para transformar interesse em contato.', 'One page designed to turn interest into contact.'),
@@ -29,6 +31,7 @@ const Services: React.FC = () => {
       ),
     },
     {
+      id: 'store',
       icon: ShoppingBag,
       name: t('Lojas virtuais', 'Online stores'),
       headline: t('Seu catálogo disponível para vender online.', 'Your catalog, ready to sell online.'),
@@ -38,6 +41,7 @@ const Services: React.FC = () => {
       ),
     },
     {
+      id: 'systems',
       icon: Workflow,
       name: t('Sistemas web', 'Web systems'),
       headline: t('Tecnologia desenvolvida para a rotina do seu negócio.', 'Technology built around how your business runs.'),
@@ -47,6 +51,7 @@ const Services: React.FC = () => {
       ),
     },
     {
+      id: 'uxui',
       icon: PenTool,
       name: t('UX/UI Design', 'UX/UI Design'),
       headline: t('Interfaces que fazem sentido para quem usa.', 'Interfaces that make sense to the people using them.'),
@@ -56,6 +61,7 @@ const Services: React.FC = () => {
       ),
     },
     {
+      id: 'redesign',
       icon: RefreshCcw,
       name: t('Reformulação de sites', 'Website redesign'),
       headline: t('Seu site atual já não representa sua empresa?', "Your current site no longer represents your company?"),
@@ -64,7 +70,7 @@ const Services: React.FC = () => {
         'Visual refresh, clearer navigation, responsiveness and reorganized content.'
       ),
     },
-  ];
+  ], [t]);
 
   return (
     <section id="services" aria-labelledby="services-title" className="relative bg-surface section-padding">
@@ -96,22 +102,21 @@ const Services: React.FC = () => {
         </div>
 
         <motion.ul
-          className="grid sm:grid-cols-2 lg:grid-cols-3 [&>li]:bg-surface mt-16 bg-border border border-border rounded-3xl overflow-hidden"
-          style={{ gap: 1 }}
+          className="isolate gap-px grid sm:grid-cols-2 lg:grid-cols-3 mt-16 bg-border border border-border rounded-3xl overflow-hidden"
           variants={stagger(0.07)}
           initial="hidden"
           whileInView="visible"
           viewport={{ once: true, amount: 0.1 }}
         >
           {services.map((service, i) => (
-            <motion.li key={service.name} variants={fadeUp} className="group isolate relative flex flex-col p-8 sm:p-10">
+            <motion.li key={service.id} variants={fadeUp} className="group isolate relative flex flex-col bg-card p-8 sm:p-10">
               <span
                 aria-hidden="true"
-                className="-z-10 absolute inset-0 bg-[radial-gradient(120%_80%_at_0%_0%,hsl(var(--brand-green)/0.10),transparent_60%)] opacity-0 group-hover:opacity-100 transition-opacity duration-500"
+                className="-z-10 absolute inset-0 bg-[radial-gradient(120%_80%_at_0%_0%,hsl(var(--brand)/0.10),transparent_60%)] opacity-0 group-hover:opacity-100 transition-opacity duration-500 pointer-events-none"
               />
               <span
                 aria-hidden="true"
-                className="top-0 absolute inset-x-0 bg-gradient-to-r from-smart-green to-smart-cyan h-px scale-x-0 group-hover:scale-x-100 origin-left transition-transform duration-700 ease-out-expo"
+                className="top-0 absolute inset-x-0 bg-gradient-to-r from-brand to-smart-cyan h-0.5 scale-x-0 group-hover:scale-x-100 origin-left transition-transform duration-700 ease-out-expo pointer-events-none"
               />
 
               <div className="flex justify-between items-center">
@@ -129,7 +134,7 @@ const Services: React.FC = () => {
         </motion.ul>
 
         <motion.div
-          className="flex sm:flex-row flex-col justify-between items-start sm:items-center gap-6 bg-background mt-12 p-8 sm:p-10 border border-border rounded-3xl"
+          className="flex sm:flex-row flex-col justify-between items-start sm:items-center gap-6 bg-card mt-12 p-8 sm:p-10 border border-border rounded-3xl"
           initial={{ opacity: 0, y: 20 }}
           whileInView={{ opacity: 1, y: 0 }}
           viewport={inViewOnce}

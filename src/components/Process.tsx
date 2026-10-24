@@ -87,7 +87,7 @@ const Process: React.FC = () => {
             viewport={{ once: true, amount: 0.3 }}
           >
             {steps.map((step, i) => (
-              <motion.li key={step.title} variants={fadeUp} className="relative lg:pt-14 pl-12 lg:pl-0">
+              <motion.li key={i} variants={fadeUp} className="relative lg:pt-14 pl-12 lg:pl-0">
                 <span
                   aria-hidden="true"
                   className="top-0 left-0 absolute flex justify-center items-center bg-ink border border-white/20 rounded-full w-6 h-6"
